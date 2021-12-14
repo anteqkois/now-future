@@ -4,11 +4,10 @@ import {
   Routes,
   Route,
 } from 'react-router-dom';
+import './layouts/globalStyle.css';
 
-import { ThemeProvider } from './providers/ThemeContext';
 import { ErrorProvider } from './providers/ErrorContext';
 
-import MainLayout from './layouts/MainLayout';
 import ScrollToTop from './components/utils/ScrollToTop';
 import NotFound from './components/utils/NotFound';
 import Test from './components/Test';
@@ -30,20 +29,16 @@ import Test from './components/Test';
 
 function App() {
   return (
-    <ThemeProvider>
-      < BrowserRouter>
+      <BrowserRouter>
         <ErrorProvider>
-          <MainLayout>
             <ScrollToTop />
             <Routes>
               {/* <PrivateRoute path="/admin" component={<h1>Admin</h1>} /> */}
               <Route path="/" element={<Test/>} />
               <Route path="*" component={<NotFound/>} />
             </Routes>
-          </MainLayout>
         </ErrorProvider>
       </BrowserRouter>
-    </ThemeProvider>
   );
 }
 

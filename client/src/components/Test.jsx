@@ -1,31 +1,7 @@
 import React, { useEffect } from 'react';
-import styled from 'styled-components';
+import{ MDBCard, MDBCardBody, MDBCardTitle, MDBCardText, MDBCardImage, MDBBtn } from 'mdb-react-ui-kit';
 
 import useError from '../providers/ErrorContext';
-
-const StyledTest = styled.div`
-  color: ${({ theme }) => theme.colors.textOnBackground};
-  ${({ theme }) => theme.typography.H3};
-  padding: ${({ theme }) => theme.spacing.xl1};
-
-  p {
-    ${({ theme }) => theme.typography.body1}
-  }
-`;
-
-const StyledTestTwo = styled.div`
-  color: ${({ theme }) => theme.colors.textOnBackground};
-  ${({ theme }) => theme.typography.H3};
-  padding: ${({ theme }) => theme.spacing.xl1};
-  h2 {
-    ${({ theme }) => theme.typography.H1};
-    color: ${({ theme }) => theme.colors.primary};
-  }
-
-  p {
-    ${({ theme }) => theme.typography.body1}
-  }
-`;
 
 function Test() {
   // const setError = useError();
@@ -41,32 +17,21 @@ function Test() {
 
   return (
     <>
-      <StyledTest>
-        Potwierdź !
-        <p>
-          lorem rejfner ferfuni erfnoerf erfnioerf rfeioerf oi nioerf refnlorem
-          rejfner ferfuni erfnoerf erfnioerf rfeioerf oi nioerf refn lorem
-          rejfner ferfuni erfnoerf erfnioerf rfeioerf oi nioerf refn lorem
-          rejfner ferfuni erfnoerf erfnioerf rfeioerf oi nioerf refn lorem
-          rejfner ferfuni erfnoerf erfnioerf rfeioerf oi nioerf refn lorem
-          rejfner ferfuni erfnoerf erfnioerf rfeioerf oi nioerf refn lorem
-          rejfner ferfuni erfnoerf erfnioerf rfeioerf oi nioerf refn lorem
-          rejfner ferfuni erfnoerf erfnioerf rfeioerf oi nioerf refn lorem
-        </p>
-      </StyledTest>
-      <StyledTestTwo>
-        <h2>Potwierdź !</h2>
-        <p>
-          lorem rejfner ferfuni erfnoerf erfnioerf rfeioerf oi nioerf refnlorem
-          rejfner ferfuni erfnoerf erfnioerf rfeioerf oi nioerf refn lorem
-          rejfner ferfuni erfnoerf erfnioerf rfeioerf oi nioerf refn lorem
-          rejfner ferfuni erfnoerf erfnioerf rfeioerf oi nioerf refn lorem
-          rejfner ferfuni erfnoerf erfnioerf rfeioerf oi nioerf refn lorem
-          rejfner ferfuni erfnoerf erfnioerf rfeioerf oi nioerf refn lorem
-          rejfner ferfuni erfnoerf erfnioerf rfeioerf oi nioerf refn lorem
-          rejfner ferfuni erfnoerf erfnioerf rfeioerf oi nioerf refn lorem
-        </p>
-      </StyledTestTwo>
+      <p>Hello NowFuture</p>
+      <MDBBtn>Button</MDBBtn>
+      <MDBBtn className='mx-2' color='danger'>
+        Danger
+      </MDBBtn>
+      <MDBCard style={{ maxWidth: '22rem' }}>
+      <MDBCardImage src='https://mdbcdn.b-cdn.net/img/new/standard/nature/184.jpg' position='top' alt='Fissure in Sandstone' />
+      <MDBCardBody>
+        <MDBCardTitle>Card title</MDBCardTitle>
+        <MDBCardText>
+          Some quick example text to build on the card title and make up the bulk of the card's content.
+        </MDBCardText>
+        <MDBBtn href='#'>Button</MDBBtn>
+      </MDBCardBody>
+    </MDBCard>
     </>
   );
 }
