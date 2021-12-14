@@ -7,7 +7,8 @@ import cookieParser from 'cookie-parser';
 
 //import routes
 import authRoutes from './routes/authRouter.js';
-import exampleRoutes from './routes/exampleRouter.js';
+import postRouters from './routes/postRouter.js';
+import commentRouters from './routes/commentRouter.js';
 
 //import middlewares
 import { notFound, catchErrors } from './middlewares/errors.js';
@@ -24,7 +25,8 @@ app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use('/api/v1/auth', authRoutes);
-app.use('/api/v1/test', exampleRoutes);
+app.use('/api/v1/post', postRouters);
+app.use('/api/v1/comment', commentRouters);
 
 if (process.env.MODULE === 'production') {
   app.use(express.static(join(__dirname, 'client/build')));
