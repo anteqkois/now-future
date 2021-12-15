@@ -38,6 +38,8 @@ const StyledHeader = styled.div`
   }
 `;
 
+//To jest zrobione na żeby tylko coś było. -> Czyli do zrobienia na kiedyś
+
 function NotFound() {
   const location = useLocation();
 

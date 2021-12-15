@@ -10,11 +10,8 @@ import NotFound from './components/utils/NotFound';
 import Test from './components/Test';
 
 const PrivateRoute = ({ children }) =>
-  sessionStorage.getItem('isLogined') ? (
-    children
-  ) : (
-    <Navigate to={{ pathname: '/login' }} />
-  );
+  // sessionStorage.getItem('isLogined') ? children : <Navigate to={{ pathname: '/login' }} />;
+  children;
 
 function App() {
   return (
@@ -24,25 +21,73 @@ function App() {
           <MainLayout>
             <ScrollToTop />
             <Routes>
+              <Route path="/login" element={<h1>Login</h1>} />
+              <Route path="/signup" element={<h1>Sigh Up</h1>} />
               <Route
-                path="/admin"
+                path="/home"
                 element={
                   <PrivateRoute>
-                    <Test />
+                    <h1>Tu będzie stron startowa po zalogowaniu + tu zamieszczę możliwośc szukania po # itdl.</h1>
                   </PrivateRoute>
                 }
               />
-              <Route path="/" element={<Test />} />
-              <Route path="login" element={<h1>Login</h1>} />
-              <Route path="signup" element={<h1>Sigh Up</h1>} />
-              <Route path="main" element={<h1>Main</h1>} />
-              <Route path="discussion" element={<h1>discussion</h1>} />
-              <Route path="statistic" element={<h1>statistic</h1>} />
-              <Route path="post" element={<h1>post</h1>} />
               <Route
-                path="/post/:category"
-                element={<h1>/post/:category</h1>}
+                path="/:user"
+                element={
+                  <PrivateRoute>
+                    <h1>Tu zrobimy panel użytkonika. Będzie po routem "localhost:3000//marcin"</h1>
+                  </PrivateRoute>
+                }
               />
+              <Route
+                path="/:user/posts"
+                element={
+                  <PrivateRoute>
+                    <h1>Tu będa pokazywać się posty zalogowanego użytkownika</h1>
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/statistic"
+                element={
+                  <PrivateRoute>
+                    <h1>Statystyki</h1>
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/statistic/:option"
+                element={
+                  <PrivateRoute>
+                    <h1>Bardziej dokładnie jakaś dana statystyka</h1>
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/posts/:slug"
+                element={
+                  <PrivateRoute>
+                    <h1>Podgląd pojedynczego postu</h1>
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/posts/create"
+                element={
+                  <PrivateRoute>
+                    <h1>Tworzenie postu</h1>
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/posts/edit/:slug"
+                element={
+                  <PrivateRoute>
+                    <h1>Edycja postu</h1>
+                  </PrivateRoute>
+                }
+              />
+              <Route path="/" element={<h1>Tu będzie landing page który będzie wyświetlać się nie zalogowanym</h1>} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </MainLayout>
