@@ -10,6 +10,8 @@ import LogoContainer from '../containers/Login/LogoContainer';
 function Login() {
     return (
         <>
+            <h1>siema</h1>
+            <h2>cos tu nie dziala xD</h2>
             <MainContainer>
                 <HeaderContainer />
                 <InputsContainer />
