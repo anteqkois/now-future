@@ -9,6 +9,8 @@ import ScrollToTop from './components/utils/ScrollToTop';
 import NotFound from './components/utils/NotFound';
 import Test from './components/Test';
 
+import Login from './pages/Login';
+
 const PrivateRoute = ({ children }) =>
   // sessionStorage.getItem('isLogined') ? children : <Navigate to={{ pathname: '/login' }} />;
   children;
@@ -21,7 +23,7 @@ function App() {
           <MainLayout>
             <ScrollToTop />
             <Routes>
-              <Route path="/login" element={<h1>Login</h1>} />
+              <Route path="/login" element={Login} />
               <Route path="/signup" element={<h1>Sigh Up</h1>} />
               <Route
                 path="/home"
