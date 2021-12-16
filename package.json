@@ -10,6 +10,7 @@
     "commit": "git add . && git commit -u",
     "postcommit": "git push",
     "dev": "nodemon server.js",
+    "predev-client": "git pull",
     "dev-client": "cd client && npm start"
   },
   "repository": {
