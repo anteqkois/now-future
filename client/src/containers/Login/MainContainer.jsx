@@ -4,11 +4,12 @@ import styled from 'styled-components';
 const StyledBackground = styled.div`
     min-width: 100vw;
     min-height: 100vh;
-    background: ${({ theme }) => theme.lightColors.background};
     display: flex;
     align-items: center;
     justify-content: center;
 `
+
+// background: ${({ theme }) => theme.lightColors.background};
 
 const StyledForm = styled.form`
     display: flex;
@@ -21,7 +22,6 @@ const StyledForm = styled.form`
     box-shadow: 0 8px 32px 0 #f5f5f5;
     backdrop-filter: blur(8.5px);
     -webkit-backdrop-filter: blur(8.5px);
-    color: ${({ theme }) => theme.lightColors.textOnBackground};
     border-radius: ${({ theme }) => theme.spacing.s};
 
 
@@ -33,6 +33,7 @@ const StyledForm = styled.form`
         width: 30vh;
     }
 `
+// color: ${({ theme }) => theme.lightColors.textOnBackground};
 
 function MainContainer() {
     return (
