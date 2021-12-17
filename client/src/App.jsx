@@ -23,7 +23,7 @@ function App() {
           <MainLayout>
             <ScrollToTop />
             <Routes>
-              <Route path="/login" element={Login} />
+              <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<h1>Sigh Up</h1>} />
               <Route path="/apiTest" element={<Test />} />
               <Route
