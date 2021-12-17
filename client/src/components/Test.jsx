@@ -1,5 +1,7 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+
+import * as postsApi from '../api/postsAPI';
 
 import useError from '../providers/ErrorContext';
 
@@ -27,7 +29,8 @@ const StyledTestTwo = styled.div`
 
 function Test() {
   // const setError = useError();
-
+  const [post, setPost] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   // useEffect(() => {
   //   const timeOut = setTimeout(() => {
   //     setError('Coś poszło nie tak!');
@@ -37,22 +40,21 @@ function Test() {
   //   };
   // }, [setError]);
 
+  useEffect(() => {
+    try {
+      (async () => {
+        setPost(await postsApi.getAll());
+        setIsLoading(false);
+      })();
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
+  !isLoading && console.log(post);
+
   return (
     <>
-      <StyledTest>
-        Potwierdź !
-        <p>
-          lorem rejfner ferfuni erfnoerf erfnioerf rfeioerf oi nioerf refnlorem
-          rejfner ferfuni erfnoerf erfnioerf rfeioerf oi nioerf refn lorem
-        </p>
-      </StyledTest>
-      <StyledTestTwo>
-        <h2>Potwierdź !</h2>
-        <p>
-          lorem rejfner ferfuni erfnoerf erfnioerf rfeioerf oi nioerf refnlorem
-          rejfner ferfuni erfnoerf erfnioerf rfeioerf oi nioerf refn lorem
-        </p>
-      </StyledTestTwo>
+      <StyledTest></StyledTest>
     </>
   );
 }
