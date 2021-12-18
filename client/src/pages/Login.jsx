@@ -1,23 +1,26 @@
 import React from 'react'
+import styled from 'styled-components';
 
-import MainContainer from '../containers/Login/MainContainer';
-import HeaderContainer from '../containers/Login/HeaderContainer';
-import InputsContainer from '../containers/Login/InputsContainer';
-import ButtonsContainer from '../containers/Login/ButtonsContainer';
-import LogoContainer from '../containers/Login/LogoContainer';
+import HeaderContainer from '../components/utils/HeaderContainer'
+import StyledForm from '../containers/Login/StyledForm'
+import LogoContainer from '../components/utils/LogoContainer';
 
+
+const MainContainer = styled.div`
+    min-width: 100vw;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+`
 
 function Login() {
     return (
         <>
-            <h1>siema</h1>
-            <h2>cos tu nie dziala xD</h2>
             <MainContainer>
                 <HeaderContainer />
-                <InputsContainer />
-                <ButtonsContainer />
-                <LogoContainer />
-            </MainContainer>   
+                <StyledForm />
+            </MainContainer>
         </>
     )
 }
