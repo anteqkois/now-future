@@ -7,7 +7,7 @@ import { ErrorProvider } from './providers/ErrorContext';
 import MainLayout from './layouts/MainLayout';
 import ScrollToTop from './components/utils/ScrollToTop';
 import NotFound from './components/utils/NotFound';
-import Test from './components/Test';
+import TestReduxUser from './components/TestReduxUser';
 
 import Login from './pages/Login';
 
@@ -25,7 +25,7 @@ function App() {
             <Routes>
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<h1>Sigh Up</h1>} />
-              <Route path="/apiTest" element={<Test />} />
+              <Route path="/redux" element={<TestReduxUser />} />
               <Route
                 path="/home"
                 element={

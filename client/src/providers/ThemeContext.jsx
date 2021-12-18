@@ -3,11 +3,7 @@ import { DarkTheme, LightTheme } from '../layouts/theme';
 
 export const ThemeContext = React.createContext();
 
-const getFromDevice = () =>
-  localStorage.setItem(
-    'darkMode',
-    matchMedia('(prefers-color-scheme: dark)').matches,
-  );
+const getFromDevice = () => localStorage.setItem('darkMode', matchMedia('(prefers-color-scheme: dark)').matches);
 
 const getFromLocalStorage = () => {
   localStorage.getItem('darkMode') === null && getFromDevice();
@@ -26,7 +22,8 @@ export const ThemeProvider = ({ children }) => {
       value={{
         isDarkMode: isDarkMode,
         setIsDarkMode: setIsDarkMode,
-        theme: isDarkMode ? DarkTheme : LightTheme,
+        theme: LightTheme,
+        // theme: isDarkMode ? DarkTheme : LightTheme,
       }}
     >
       {children}

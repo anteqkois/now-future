@@ -18,20 +18,18 @@ const login = async (req, res, next) => {
       expiresIn: 3600,
     });
 
-    const refreshToken = jwt.sign(
-      { email: email },
-      process.env.REFRESH_TOKEN_SECRET,
-      {
-        expiresIn: 43200,
-      },
-    );
+    const refreshToken = jwt.sign({ email: email }, process.env.REFRESH_TOKEN_SECRET, {
+      expiresIn: 43200,
+    });
 
     res.cookie('JWT', accessToken, {
       maxAge: 86400000,
       httpOnly: true,
     });
 
-    return res.status(200).send('You are successfuly logged');
+    const { nick, _id } = user;
+
+    return res.status(200).send({ email, nick, _id });
   }
   !auth && next(createApiError(`incorrect email`, 400));
 };
@@ -53,8 +51,7 @@ const signup = async (req, res, next) => {
 
   const user = await User.create({ email, password });
 
-  !req.body.email &&
-    next(createApiError(`Something went wrong, user wasn't create !`, 500));
+  !req.body.email && next(createApiError(`Something went wrong, user wasn't create !`, 500));
 
   next();
 };
