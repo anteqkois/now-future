@@ -1,9 +1,9 @@
 import React from 'react'
 import styled from 'styled-components';
 
-import HeaderContainer from '../components/utils/HeaderContainer'
+import HeaderContainer from '../components/Login/HeaderContainer'
 import StyledForm from '../containers/Login/StyledForm'
-import LogoContainer from '../components/utils/LogoContainer';
+import LogoContainer from '../components/Login/LogoContainer';
 
 
 const MainContainer = styled.div`
