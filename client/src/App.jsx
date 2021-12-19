@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 import { ThemeProvider } from './providers/ThemeContext';
 import { ErrorProvider } from './providers/ErrorContext';
@@ -11,9 +12,16 @@ import TestReduxUser from './components/TestReduxUser';
 
 import Login from './pages/Login';
 
-const PrivateRoute = ({ children }) =>
+const PrivateRoute = ({ children }) => {
+  const { user } = useSelector((state) => state.user);
   // sessionStorage.getItem('isLogined') ? children : <Navigate to={{ pathname: '/login' }} />;
-  children;
+  return children;
+};
+// const PrivateRoute = ({ children }) => {
+//   const { user } = useSelector((state) => state.user);
+//   // sessionStorage.getItem('isLogined') ? children : <Navigate to={{ pathname: '/login' }} />;
+//   return user ? children : <Navigate to={{ pathname: '/login' }} />;
+// };
 
 function App() {
   return (
