@@ -1,8 +1,9 @@
 import React from 'react'
 import styled from 'styled-components';
 
-import HeaderContainer from '../components/Login/HeaderContainer'
-import StyledForm from '../containers/Login/StyledForm'
+import HeaderContainer from '../components/Login/HeaderContainer';
+import StyledForm from '../containers/Login/StyledForm';
+import SwitchSignLog from '../components/Login/SwitchSignLog';
 import LogoContainer from '../components/Login/LogoContainer';
 
 
@@ -20,6 +21,8 @@ function Login() {
             <MainContainer>
                 <HeaderContainer />
                 <StyledForm />
+                <SwitchSignLog />
+                <LogoContainer />
             </MainContainer>
         </>
     )

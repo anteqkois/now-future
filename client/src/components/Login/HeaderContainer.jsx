@@ -10,7 +10,7 @@ const Container = styled.div`
     align-item: center;
     justify-content: center;
     position: absolute;
-    top: 3rem;
+    top: 7vh;
 `
 
 function HeaderContainer() {

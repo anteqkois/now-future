@@ -4,7 +4,7 @@ import styled from 'styled-components'
 const StyledInput = styled.input`
     width: 100%;
     height: 100%;
-    color: black;
+    color: ${({ theme }) => theme.colors.textOnBackground};
     font-size: 1rem;
     padding-top: ${({ theme }) => theme.spacing.s };
     border: none;
