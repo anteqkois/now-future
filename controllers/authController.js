@@ -5,6 +5,21 @@ import bcrypt from 'bcrypt';
 import User from '../database/models/user.js';
 import { createApiError } from '../middlewares/errors.js';
 
+const handleSignupErrors = (err) => {
+  // console.log(err.message, err.code);
+  let errors = { email: '', password: '', username: '' };
+
+  // validation errors
+  if (err.message.includes('User validation failed')) {
+    Object.values(err.errors).forEach(({ properties }) => {
+      errors[properties.path] = properties.message;
+    });
+  }
+  // console.log(errors);
+
+  return errors;
+};
+
 const login = async (req, res, next) => {
   const { email, password } = req.body;
 
@@ -12,7 +27,7 @@ const login = async (req, res, next) => {
 
   if (user) {
     const auth = await bcrypt.compare(password, user.password);
-    !auth && next(createApiError(`incorrect password`, 400));
+    !auth && next(createApiError(`Niepoprawna nazwa użtkownika lub hasło`, 400));
 
     const accessToken = jwt.sign({ email: email }, process.env.TOKEN_SECRET, {
       expiresIn: 3600,
@@ -27,11 +42,11 @@ const login = async (req, res, next) => {
       httpOnly: true,
     });
 
-    const { nick, _id } = user;
+    const { username, _id } = user;
 
-    return res.status(200).send({ email, nick, _id });
+    return res.status(200).send({ email, username, _id });
   }
-  !auth && next(createApiError(`incorrect email`, 400));
+  !user && next(createApiError(`Niepoprawna nazwa użtkownika lub hasło`, 400));
 };
 
 const logout = (req, res) => {
@@ -40,19 +55,24 @@ const logout = (req, res) => {
     httpOnly: true,
   });
 
-  return res.status(200).send('You are successfuly logout');
+  return res.status(200).send('Zostałeś wylogowany');
 };
 
 const signup = async (req, res, next) => {
-  !req.body.email && next(createApiError(`No require email`, 422));
-  !req.body.password && next(createApiError(`No require password`, 422));
+  !req.body.username && next(createApiError(`Brak nazwy używkownika`, 422));
+  !req.body.email && next(createApiError(`Brak e-maila`, 422));
+  !req.body.password && next(createApiError(`Brak hasła`, 422));
 
-  const { email, password } = req.body;
+  const { email, password, username } = req.body;
 
-  const user = await User.create({ email, password });
+  try {
+    const user = await User.create({ email, password, username });
+  } catch (err) {
+    const errors = handleSignupErrors(err);
+    return res.status(400).json({ error: errors });
+  }
 
-  !req.body.email && next(createApiError(`Something went wrong, user wasn't create !`, 500));
-
+  !user && next(createApiError(`Coś poszło nie tak, konto nie zostało utworzone !`, 500));
   next();
 };
 

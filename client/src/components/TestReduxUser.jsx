@@ -5,7 +5,7 @@ import styled from 'styled-components';
 
 // import useError from '../providers/ErrorContext';
 import { useDispatch, useSelector } from 'react-redux';
-import { login, logout} from '../feature/userSlice';
+import { login, logout, signup } from '../feature/userSlice';
 
 const StyledTest = styled.div`
   color: ${({ theme }) => theme.colors.textOnBackground};
@@ -22,16 +22,22 @@ function TestReduxUser() {
   // const [isLoading, setIsLoading] = useState(true);
 
   const dispatch = useDispatch();
-  const { user } = useSelector((state) => state.user);
+  const { user, error } = useSelector((state) => state.user);
 
   const handleLogin = () => {
     const values = { email: 'jannowak@gmail.com', password: 'haslo123' };
     dispatch(login(values));
   };
+
+  const handleSignup = () => {
+    const values = { username: '123', email: 'michal123gmail.com', password: 'has' };
+    // const values = { email: 'michal123@gmail.com', password: 'haslo123' };
+    dispatch(signup(values));
+  };
   if (user) {
     return (
       <h1>
-        {user.nick}
+        {user.username}
         {user.email}
         <button onClick={() => dispatch(logout())}>Logout</button>
       </h1>
@@ -41,7 +47,9 @@ function TestReduxUser() {
   return (
     <>
       <StyledTest>
+        {/* {error ? error : ''} */}
         <button onClick={handleLogin}>Zaloguj się!{user}</button>
+        <button onClick={handleSignup}>Stórz konto!{user}</button>
       </StyledTest>
     </>
   );

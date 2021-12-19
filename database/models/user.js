@@ -10,12 +10,12 @@ export const userSchema = mongoose.Schema({
     lowercase: true,
     validate: [validator.isEmail, 'Niepoprawny e-mail'],
   },
-  nick: {
+  username: {
     type: String,
     required: [true, 'Wprowadź nazwę'],
     unique: true,
     lowercase: true,
-    minlength: [6, 'Minimalna ilość znakó nazwy to 6'],
+    minlength: [6, 'Minimalna ilość znaków nazwy to 6'],
   },
   password: {
     type: String,
