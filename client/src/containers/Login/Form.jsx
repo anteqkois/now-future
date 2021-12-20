@@ -7,29 +7,17 @@ import Input from '../../components/utils/Input';
 import Button from '../../components/utils/Button';
 
 const Form = styled.form`
+    margin: 15px 0;
     width: 100%;
-    height: fit-content;
+    /* height: fit-content; */
 `;
 
 const InputContainer = styled.div`
     width: 80%;
-    height: 50px;
     position: relative;
     top: -17vh;
     left: 10%;
     overflow: hidden;
-`;
-
-const ErrorContainer = styled.div`
-    width: 80%;
-    position: relative;
-    top: -17vh;
-    left: 10%;
-`;
-
-const ErrorMessage = styled.p`
-    font-size: ${({ theme }) => theme.typography.H6};
-    color: ${({ theme }) => theme.colors.error};
 `;
 
 const ButtonContainer = styled.div`
@@ -72,11 +60,6 @@ function StyledForm() {
                         value={formik.values.email}
                     />
                 </InputContainer>
-
-                {/* <ErrorContainer>
-                    <ErrorMessage>error text</ErrorMessage>
-                </ErrorContainer> */}
-
                 <InputContainer>
                     <Input
                         type="password"
@@ -87,11 +70,6 @@ function StyledForm() {
                         value={formik.values.password}
                     />
                 </InputContainer>
-
-                {/* <ErrorContainer>
-                    <ErrorMessage>error text</ErrorMessage>
-                </ErrorContainer> */}
-
                 <ButtonContainer>
                     <Button type="submit" />
                 </ButtonContainer>
