@@ -6,6 +6,7 @@ import styled from 'styled-components';
 // import useError from '../providers/ErrorContext';
 import { useDispatch, useSelector } from 'react-redux';
 import { login, logout, signup } from '../feature/userSlice';
+import { getAllPosts } from '../feature/postsSlice';
 import { useNavigate } from 'react-router-dom';
 
 const StyledTest = styled.div`
@@ -24,7 +25,8 @@ function TestReduxUser() {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { user, error } = useSelector((state) => state.user);
+  const userStore = useSelector((state) => state.user);
+  const postsStore = useSelector((state) => state.posts);
 
   const handleLogin = () => {
     const values = { email: 'jannowak@gmail.com', password: 'haslo123' };
@@ -37,6 +39,10 @@ function TestReduxUser() {
     dispatch(signup(values));
   };
 
+  const handleGetAllPsts = () => {
+    dispatch(getAllPosts());
+  };
+
   return (
     <>
       <StyledTest>
@@ -44,10 +50,11 @@ function TestReduxUser() {
         <button onClick={handleLogin}>Zaloguj się!</button>
         <button onClick={handleSignup}>Stórz konto!</button>
         <button onClick={() => navigate('/private')}>Do private routa</button>
-        {user && (
+        <button onClick={handleGetAllPsts}>Pobierz posty</button>
+        {userStore.user && (
           <h1>
-            {user.username}
-            {user.email}
+            {userStore.user.username}
+            {userStore.user.email}
             <button onClick={() => dispatch(logout())}>Logout</button>
           </h1>
         )}

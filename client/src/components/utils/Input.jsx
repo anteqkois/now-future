@@ -52,16 +52,23 @@ const LabelSpan = styled.span`
     transition: all .3s ease;
 `
 
-function Input() {
+function Input({type, placeholder, id, name, onChange, value}) {
     return (
         <>
-            <StyledInput type='text' name='name' autoComplete='off' required />
+            <StyledInput
+                type={type}
+                name={name}
+                value={value}
+                onChange={onChange}
+                autoComplete="off"
+                required
+            />
 
-            <StyledLabel for="name" className='label'>
-                <LabelSpan className='content'>Username:</LabelSpan>
+            <StyledLabel htmlFor={name} className="label">
+                <LabelSpan className="content">{placeholder}:</LabelSpan>
             </StyledLabel>
         </>
-    )
+    );
 }
 
 export default Input
