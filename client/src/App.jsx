@@ -98,6 +98,14 @@ function App() {
                   </PrivateRoute>
                 }
               />
+              <Route
+                path="/graph"
+                element={
+                  <PrivateRoute>
+                    <h1>Wykresy no ten</h1>
+                  </PrivateRoute>
+                }
+              />
               <Route path="/" element={<h1>Tu będzie landing page który będzie wyświetlać się nie zalogowanym</h1>} />
               <Route path="*" element={<NotFound />} />
             </Routes>
