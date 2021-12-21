@@ -11,6 +11,8 @@ const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
   }
   body{
+    min-width: 100vw;
+    min-height: 100vh;
     background-color: ${({ theme }) => theme.colors.background};
     color: ${({ theme }) => theme.colors.textOnBackground};
     font-family: 'Poppins';
@@ -34,14 +36,14 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 const Layout = ({ children }) => {
-  const { theme } = useContext(ThemeContext);
+    const { theme } = useContext(ThemeContext);
 
-  return (
-    <ThemeProvider theme={theme}>
-      <GlobalStyle />
-      {children}
-    </ThemeProvider>
-  );
+    return (
+        <ThemeProvider theme={theme}>
+            <GlobalStyle />
+            {children}
+        </ThemeProvider>
+    );
 };
 
 export default Layout;

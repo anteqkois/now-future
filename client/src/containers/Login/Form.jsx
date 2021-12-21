@@ -2,36 +2,39 @@ import React from 'react';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { useFormik } from 'formik';
+import { Link } from 'react-router-dom';
 
 import Input from '../../components/utils/Input';
 import Button from '../../components/utils/Button';
 
-const Form = styled.form`
+const StyledForm = styled.form`
     margin: 15px 0;
+    padding: 0 20px;
     width: 100%;
-    /* height: fit-content; */
+    max-width: 350px;
 `;
 
 const InputContainer = styled.div`
-    width: 80%;
-    position: relative;
-    top: -17vh;
-    left: 10%;
+    width: 100%;
     overflow: hidden;
 `;
 
 const ButtonContainer = styled.div`
+    margin-top: 20px;
     width: 100%;
     display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
-    position: relative;
-    top: -10vh;
-    left: 0;
+    justify-content: space-between;
+    flex-direction: column;
+    gap: 20px;
+`;
+const StyledLink = styled(Link)`
+    text-decoration: none;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
 `;
 
-function StyledForm() {
+function Form() {
     const dispatch = useDispatch();
     const userStore = useSelector((state) => state.user);
 
@@ -49,7 +52,7 @@ function StyledForm() {
 
     return (
         <>
-            <Form onSubmit={formik.handleSubmit}>
+            <StyledForm onSubmit={formik.handleSubmit}>
                 <InputContainer>
                     <Input
                         type="text"
@@ -71,11 +74,16 @@ function StyledForm() {
                     />
                 </InputContainer>
                 <ButtonContainer>
-                    <Button type="submit" />
+                    <Button type="submit">zaloguj się</Button>
+                    <StyledLink to="/register">
+                        <Button type="button" option="ghost">
+                            Załóż konto
+                        </Button>
+                    </StyledLink>
                 </ButtonContainer>
-            </Form>
+            </StyledForm>
         </>
     );
 }
 
-export default StyledForm;
+export default Form;
