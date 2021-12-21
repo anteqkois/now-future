@@ -24,7 +24,10 @@ const StyledInput = styled.input`
     &:focus + label,
     &:valid + label {
         font-size: 0.8rem;
-        color: ${({ theme }) => theme.colors.primary};
+        color: ${({ theme, error }) => {
+            return error ? theme.colors.error : theme.colors.primary;
+        }
+        };
         transform: translateY(-15px);
         transition: all 0.3s ease;
     }
@@ -46,11 +49,13 @@ const StyledLabel = styled.label`
 const StyledBorder = styled.span`
     position: absolute;
     left: 0px;
-    top: 40px;
+    top: 39px;
     height: 1px;
     width: 100%;
     max-width: 300px;
-    border-bottom: 2px solid ${({ theme }) => theme.colors.primary};
+    border-bottom: 2px solid ${({ theme, error }) => {
+        return error ? theme.colors.error : theme.colors.primary;
+    }};
     transform: translateX(-100%);
     transition: transform 0.3s ease;
     pointer-events: none;
@@ -62,7 +67,7 @@ const StyledError = styled.p`
     color: ${({ theme }) => theme.colors.error};
 `;
 
-function Input({ type, placeholder, id, name, onChange, value }) {
+function Input({ type, placeholder, id, name, onChange, value, error }) {
     return (
         <StyledContainer>
             <StyledInput
@@ -71,11 +76,12 @@ function Input({ type, placeholder, id, name, onChange, value }) {
                 value={value}
                 onChange={onChange}
                 autoComplete="off"
+                error={error}
                 required
             />
             <StyledLabel htmlFor={name}>{placeholder}</StyledLabel>
-            <StyledBorder />
-            <StyledError>To jest error !</StyledError>
+            <StyledBorder error={error} />
+            <StyledError>{error ? `*${error}` : ''}</StyledError>
         </StyledContainer>
     );
 }

@@ -27,7 +27,7 @@ const login = async (req, res, next) => {
 
   if (user) {
     const auth = await bcrypt.compare(password, user.password);
-    !auth && next(createApiError(`Niepoprawna nazwa użtkownika lub hasło`, 400));
+    !auth && next(createApiError(`Niepoprawny e-mail lub hasło`, 400));
 
     const accessToken = jwt.sign({ email: email }, process.env.TOKEN_SECRET, {
       expiresIn: 3600,
@@ -46,7 +46,7 @@ const login = async (req, res, next) => {
 
     return res.status(200).send({ email, username, _id });
   }
-  !user && next(createApiError(`Niepoprawna nazwa użtkownika lub hasło`, 400));
+  !user && next(createApiError(`Niepoprawny e-mail lub hasło`, 400));
 };
 
 const logout = (req, res) => {

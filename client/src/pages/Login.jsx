@@ -6,14 +6,6 @@ import Form from '../containers/Login/Form';
 import { ReactComponent as Logo } from '../assets/logo.svg';
 import { ReactComponent as NowFuture } from '../assets/nowfuture.svg';
 
-// const MainContainer = styled.div`
-//     min-height: 100vh;
-//     min-width: 100vw;
-//     display: flex;
-//     align-items: center;
-//     justify-content: center;
-// `;
-
 const FormContainer = styled.div`
     width: 100%;
     max-width: 400px;

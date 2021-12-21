@@ -2,7 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { useFormik } from 'formik';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { login } from '../../feature/userSlice.js';
 
 import Input from '../../components/utils/Input';
 import Button from '../../components/utils/Button';
@@ -37,6 +38,7 @@ const StyledLink = styled(Link)`
 function Form() {
     const dispatch = useDispatch();
     const userStore = useSelector((state) => state.user);
+    const navigate = useNavigate();
 
     const formik = useFormik({
         initialValues: {
@@ -44,11 +46,12 @@ function Form() {
             password: '',
         },
         onSubmit: (values, { setSubmitting, resetForm }) => {
-            //   handleLogin(values);
-            console.log(values);
+            dispatch(login(values));
         },
         enableReinitialize: true,
     });
+
+    userStore.user && navigate('/home');
 
     return (
         <>
@@ -61,6 +64,7 @@ function Form() {
                         name="email"
                         onChange={formik.handleChange}
                         value={formik.values.email}
+                        error={userStore.error}
                     />
                 </InputContainer>
                 <InputContainer>
@@ -71,6 +75,7 @@ function Form() {
                         name="password"
                         onChange={formik.handleChange}
                         value={formik.values.password}
+                        error={userStore.error}
                     />
                 </InputContainer>
                 <ButtonContainer>
