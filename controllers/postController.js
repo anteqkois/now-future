@@ -27,9 +27,10 @@ const findAll = async (req, res, next) => {
 const create = async (req, res, next) => {
   // console.log(req.body);
   const post = await new Post({
+    user: req.body.userId,
     title: req.body.title,
+    date: res.body.date,
     category: req.body.category,
-    nick: req.body.nick,
     contentPost: req.body.contentPost,
   }).save();
   return res.status(201).send({ data: post });

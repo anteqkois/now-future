@@ -72,8 +72,6 @@ const signup = async (req, res, next) => {
     const errors = handleSignupErrors(err);
     return res.status(400).json({ error: errors });
   }
-
-  !user && next(createApiError(`Coś poszło nie tak, konto nie zostało utworzone !`, 500));
   next();
 };
 
