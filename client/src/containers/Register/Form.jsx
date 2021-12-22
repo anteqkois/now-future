@@ -3,9 +3,10 @@ import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { useFormik } from 'formik';
 import { Link, useNavigate } from 'react-router-dom';
-import { login } from '../../feature/userSlice.js';
+import { signup } from '../../feature/userSlice.js';
 
 import Input from '../../components/utils/Input';
+import RadioButton from '../../components/Register/RadioButton';
 import Button from '../../components/utils/Button';
 
 const StyledForm = styled.form`
@@ -18,6 +19,10 @@ const StyledForm = styled.form`
 const InputContainer = styled.div`
     width: 100%;
     overflow: hidden;
+
+    > p {
+        margin: ${({ theme }) => theme.spacing.xs} 0;
+    }
 `;
 
 const ButtonContainer = styled.div`
@@ -35,6 +40,20 @@ const StyledLink = styled(Link)`
     flex-direction: column;
 `;
 
+const StyledRadioArea = styled.div`
+    > div {
+        width: 50%;
+        > input {
+            border-radius: 5px 0 0 5px;
+        }
+        :nth-of-type(2) {
+            input {
+                border-radius: 0 5px 5px 0;
+            }
+        }
+    }
+`;
+
 function Form() {
     const dispatch = useDispatch();
     const userStore = useSelector((state) => state.user);
@@ -42,11 +61,14 @@ function Form() {
 
     const formik = useFormik({
         initialValues: {
+            role: 'student',
             email: '',
+            username: '',
             password: '',
         },
         onSubmit: (values, { setSubmitting, resetForm }) => {
-            dispatch(login(values));
+            dispatch(signup(values));
+            // console.log(values);
         },
         enableReinitialize: true,
     });
@@ -57,6 +79,26 @@ function Form() {
         <>
             <StyledForm onSubmit={formik.handleSubmit}>
                 <InputContainer>
+                    <p>typ uytkownika</p>
+                    <StyledRadioArea role="group" aria-labelledby="my-radio-group">
+                        <RadioButton
+                            placeholder="uczeń"
+                            id="student"
+                            name="role"
+                            onChange={formik.handleChange}
+                            checked
+                            value="student"
+                        />
+                        <RadioButton
+                            placeholder="nauczyciel"
+                            id="teacher"
+                            name="role"
+                            onChange={formik.handleChange}
+                            value="teacher"
+                        />
+                    </StyledRadioArea>
+                </InputContainer>
+                <InputContainer>
                     <Input
                         type="text"
                         placeholder="email"
@@ -64,7 +106,18 @@ function Form() {
                         name="email"
                         onChange={formik.handleChange}
                         value={formik.values.email}
-                        error={userStore?.error}
+                        error={userStore.error?.email}
+                    />
+                </InputContainer>
+                <InputContainer>
+                    <Input
+                        type="text"
+                        placeholder="nazwa użytkownika"
+                        id="username"
+                        name="username"
+                        onChange={formik.handleChange}
+                        value={formik.values.username}
+                        error={userStore.error?.username}
                     />
                 </InputContainer>
                 <InputContainer>
@@ -75,14 +128,14 @@ function Form() {
                         name="password"
                         onChange={formik.handleChange}
                         value={formik.values.password}
-                        error={userStore?.error}
+                        error={userStore.error?.password}
                     />
                 </InputContainer>
                 <ButtonContainer>
-                    <Button type="submit">zaloguj się</Button>
-                    <StyledLink to="/register">
+                    <Button type="submit">Załóż konto</Button>
+                    <StyledLink to="/login">
                         <Button type="button" option="ghost">
-                            Załóż konto
+                            Zaloguj się
                         </Button>
                     </StyledLink>
                 </ButtonContainer>

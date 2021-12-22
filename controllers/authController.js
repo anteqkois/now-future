@@ -42,9 +42,9 @@ const login = async (req, res, next) => {
       httpOnly: true,
     });
 
-    const { username, _id } = user;
+    const { username, _id, role } = user;
 
-    return res.status(200).send({ email, username, _id });
+    return res.status(200).send({ email, username, _id, role });
   }
   !user && next(createApiError(`Niepoprawny e-mail lub hasło`, 400));
 };
@@ -62,11 +62,12 @@ const signup = async (req, res, next) => {
   !req.body.username && next(createApiError(`Brak nazwy używkownika`, 422));
   !req.body.email && next(createApiError(`Brak e-maila`, 422));
   !req.body.password && next(createApiError(`Brak hasła`, 422));
+  !req.body.role && next(createApiError(`Brak typu używkonika`, 422));
 
-  const { email, password, username } = req.body;
+  const { email, password, username, role } = req.body;
 
   try {
-    const user = await User.create({ email, password, username });
+    const user = await User.create({ email, password, username, role });
   } catch (err) {
     const errors = handleSignupErrors(err);
     return res.status(400).json({ error: errors });

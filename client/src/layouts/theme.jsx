@@ -1,14 +1,15 @@
 const lightColors = {
-  primary: '#6200EE',
-  primaryVariant: '#3700B3',
-  secondary: '#03DAC6',
-  secondaryVariant: '#018786',
-  background: '#FFFFFF',
-  surface: '#FFFFFF',
-  error: '#B00020',
-  textOnPrimary: '#FFFFFF',
-  textOnSecondary: '#000000',
-  textOnBackground: '#000000',
+    // primary: '#660074',
+    primary: '#6200EE',
+    primaryVariant: '#3700B3',
+    secondary: '#03DAC6',
+    secondaryVariant: '#018786',
+    background: '#FFFFFF',
+    surface: '#FFFFFF',
+    error: '#B00020',
+    textOnPrimary: '#FFFFFF',
+    textOnSecondary: '#000000',
+    textOnBackground: '#000000',
 };
 
 const darkColors = {

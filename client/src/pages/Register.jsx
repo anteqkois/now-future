@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import Form from '../containers/Login/Form';
+import Form from '../containers/Register/Form';
 
 import { ReactComponent as Logo } from '../assets/logo.svg';
 import { ReactComponent as NowFuture } from '../assets/nowfuture.svg';
@@ -14,12 +14,13 @@ const FormContainer = styled.div`
     align-items: center;
     justify-content: space-around;
     flex-direction: column;
-    position: fixed;
+    position: relative;
     top: 0vw;
     left: 50%;
     transform: translateX(-50%);
 
     ${({ theme }) => theme.media.tablet} {
+        position: fixed;
         top: 50%;
         box-shadow: rgb(0 0 0 / 50%) 5px 15px 20px;
         border-radius: 5px;
@@ -28,15 +29,15 @@ const FormContainer = styled.div`
 `;
 
 const StyledLogo = styled(Logo)`
-    width: 30%;
+    width: 25%;
 
     ${({ theme }) => theme.media.tablet} {
-        margin: 20px 0;
+        margin: ${({ theme }) => theme.spacing.m} 0;
         width: 40%;
     }
 `;
 
-function Login() {
+function Register() {
     return (
         <>
             <FormContainer>
@@ -48,4 +49,4 @@ function Login() {
     );
 }
 
-export default Login;
+export default Register;
