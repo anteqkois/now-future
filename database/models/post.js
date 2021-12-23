@@ -3,31 +3,52 @@ import { userSchema } from './user.js';
 import { commentSchema } from './comment.js';
 import { categorySchema } from './category.js';
 
-const Post = mongoose.Schema({
-    user: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
-        required: true,
+//ADD MIDLEWARE TO ADD STARS, COMMENTS ETC.
+
+const Post = mongoose.Schema(
+    {
+        user: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User',
+            required: true,
+        },
+        title: {
+            type: String,
+            required: true,
+        },
+        content: {
+            type: String,
+            required: true,
+        },
+        categories: [
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'Category',
+            },
+        ],
+        stars: [
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'User',
+            },
+        ],
+        comments: [
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'Comment',
+            },
+        ],
+        // category: [categorySchema],
+        // star: [userSchema],
+        // comments: [commentSchema],
+        // star: {
+        //   type: [mongoose.Schema.Types.ObjectId],
+        //   ref: 'User',
+        // },
     },
-    title: {
-        type: String,
-        required: true,
+    {
+        timestamps: true,
     },
-    date: {
-        type: Date,
-        required: true,
-    },
-    contentPost: {
-        type: String,
-        required: true,
-    },
-    category: [categorySchema],
-    star: [userSchema],
-    comments: [commentSchema],
-    // star: {
-    //   type: [mongoose.Schema.Types.ObjectId],
-    //   ref: 'User',
-    // },
-});
+);
 
 export default mongoose.model('Post', Post);

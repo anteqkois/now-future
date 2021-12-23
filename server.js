@@ -9,6 +9,7 @@ import cookieParser from 'cookie-parser';
 import authRoutes from './routes/authRouter.js';
 import postRoutes from './routes/postRouter.js';
 import commentRoutes from './routes/commentRouter.js';
+import categoryRoutes from './routes/categoryRouter.js';
 
 //import middlewares
 import { notFound, catchErrors } from './middlewares/errors.js';
@@ -27,17 +28,18 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/posts', postRoutes);
 app.use('/api/v1/comments', commentRoutes);
+app.use('/api/v1/category', categoryRoutes);
 
 if (process.env.MODULE === 'production') {
-  app.use(express.static(join(__dirname, 'client/build')));
-  app.get('*', (req, res) => {
-    res.sendFile(join(__dirname, 'client/build', 'index.html'));
-  });
+    app.use(express.static(join(__dirname, 'client/build')));
+    app.get('*', (req, res) => {
+        res.sendFile(join(__dirname, 'client/build', 'index.html'));
+    });
 }
 //handling errors
 app.use(notFound);
 app.use(catchErrors);
 
 app.listen(app.get('port'), () => {
-  console.log(`Listening on ${app.get('port')}`);
+    console.log(`Listening on ${app.get('port')}`);
 });

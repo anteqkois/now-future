@@ -10,4 +10,7 @@ router.get('/:title', commentController.find);
 //POST
 router.post('/', catchAsyncErrors(commentController.create));
 
+//PUT
+router.post('/:id', catchAsyncErrors(commentController.update));
+
 export default router;

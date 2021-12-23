@@ -35,20 +35,19 @@ const url =
 // };
 
 const database = mongoose
-  .connect(url, {
-    useNewUrlParser: true,
-    // useCreateIndex: true,
-    useUnifiedTopology: true,
-    // useFindAndModify: false,
-  })
-  .then(() => {
-    console.log(`Server connected with database`);
-  })
-  .catch((error) => {
-    console.log(
-      `Server can't connected with database, error message: ${error}`,
-    );
-  });
+    .connect(url, {
+        useNewUrlParser: true,
+        // useCreateIndex: true,
+        autoIndex: true, //make this also true
+        useUnifiedTopology: true,
+        // useFindAndModify: false,
+    })
+    .then(() => {
+        console.log(`Server connected with database`);
+    })
+    .catch((error) => {
+        console.log(`Server can't connected with database, error message: ${error}`);
+    });
 console.log(`Server connected with database`);
 
 export default database;

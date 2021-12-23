@@ -3,76 +3,61 @@ import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 
 import User from '../database/models/user.js';
-import { createApiError } from '../middlewares/errors.js';
-
-const handleSignupErrors = (err) => {
-  // console.log(err.message, err.code);
-  let errors = { email: '', password: '', username: '' };
-
-  // validation errors
-  if (err.message.includes('User validation failed')) {
-    Object.values(err.errors).forEach(({ properties }) => {
-      errors[properties.path] = properties.message;
-    });
-  }
-  // console.log(errors);
-
-  return errors;
-};
+import { createApiError, handleValidationErrors } from '../middlewares/errors.js';
 
 const login = async (req, res, next) => {
-  const { email, password } = req.body;
+    const { email, password } = req.body;
 
-  const user = await User.findOne({ email });
+    const user = await User.findOne({ email });
 
-  if (user) {
-    const auth = await bcrypt.compare(password, user.password);
-    !auth && next(createApiError(`Niepoprawny e-mail lub hasło`, 400));
+    if (user) {
+        const auth = await bcrypt.compare(password, user.password);
+        !auth && next(createApiError(`Niepoprawny e-mail lub hasło`, 400));
 
-    const accessToken = jwt.sign({ email: email }, process.env.TOKEN_SECRET, {
-      expiresIn: 3600,
-    });
+        const accessToken = jwt.sign({ email: email }, process.env.TOKEN_SECRET, {
+            expiresIn: 3600,
+        });
 
-    const refreshToken = jwt.sign({ email: email }, process.env.REFRESH_TOKEN_SECRET, {
-      expiresIn: 43200,
-    });
+        const refreshToken = jwt.sign({ email: email }, process.env.REFRESH_TOKEN_SECRET, {
+            expiresIn: 43200,
+        });
 
-    res.cookie('JWT', accessToken, {
-      maxAge: 86400000,
-      httpOnly: true,
-    });
+        res.cookie('JWT', accessToken, {
+            maxAge: 86400000,
+            httpOnly: true,
+        });
 
-    const { username, _id, role } = user;
+        const { username, _id, role } = user;
 
-    return res.status(200).send({ email, username, _id, role });
-  }
-  !user && next(createApiError(`Niepoprawny e-mail lub hasło`, 400));
+        return res.status(200).send({ email, username, _id, role });
+    }
+    !user && next(createApiError(`Niepoprawny e-mail lub hasło`, 400));
 };
 
 const logout = (req, res) => {
-  res.cookie('JWT', '', {
-    maxAge: 1,
-    httpOnly: true,
-  });
+    res.cookie('JWT', '', {
+        maxAge: 1,
+        httpOnly: true,
+    });
 
-  return res.status(200).send('Zostałeś wylogowany');
+    return res.status(200).send('Zostałeś wylogowany');
 };
 
 const signup = async (req, res, next) => {
-  !req.body.username && next(createApiError(`Brak nazwy używkownika`, 422));
-  !req.body.email && next(createApiError(`Brak e-maila`, 422));
-  !req.body.password && next(createApiError(`Brak hasła`, 422));
-  !req.body.role && next(createApiError(`Brak typu używkonika`, 422));
+    // !req.body.username && next(createApiError(`Brak nazwy używkownika`, 422));
+    // !req.body.email && next(createApiError(`Brak e-maila`, 422));
+    // !req.body.password && next(createApiError(`Brak hasła`, 422));
+    // !req.body.role && next(createApiError(`Brak typu używkonika`, 422));
 
-  const { email, password, username, role } = req.body;
+    const { email, username, password, role } = req.body;
 
-  try {
-    const user = await User.create({ email, password, username, role });
-  } catch (err) {
-    const errors = handleSignupErrors(err);
-    return res.status(400).json({ error: errors });
-  }
-  next();
+    try {
+        const user = await User.create({ email, username, password, role });
+    } catch (error) {
+        error = handleValidationErrors(err);
+        return res.status(400).json({ error });
+    }
+    next();
 };
 
 export default { login, logout, signup };

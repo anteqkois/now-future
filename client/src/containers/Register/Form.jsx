@@ -6,7 +6,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { signup } from '../../feature/userSlice.js';
 
 import Input from '../../components/utils/Input';
-import RadioButton from '../../components/Login/RadioButton';
+import RadioButton from '../../components/Register/RadioButton';
 import Button from '../../components/utils/Button';
 
 const StyledForm = styled.form`

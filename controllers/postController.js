@@ -2,38 +2,49 @@ import database from '../config/database.js';
 
 import Post from '../database/models/post.js';
 
+// ADD FIND BY USER, CATEGORY, POPULARITY
 const find = async (req, res, next) => {
-  const data = await Post.find({
-    category: req.params.category,
-  });
+    const data = await Post.find({
+        category: req.params.category,
+    })
+        .populate('user', 'email username role')
+        .populate('categories', 'name')
+        .populate('stars', 'email username role')
+        .populate('comments');
 
-  return res.status(200).send(data);
+    return res.status(200).send(data);
 };
 
-const findUser = async (req, res, next) => {
-  const data = await Post.find({
-    nick: req.params.user,
-  });
+// const findUser = async (req, res, next) => {
+//     const data = await Post.find({
+//         nick: req.params.user,
+//     })
+//         .populate('categories', 'category')
+//         .populate('stars', 'user')
+//         .populate('comments', 'comment');;
 
-  return res.status(200).send(data);
-};
+//     return res.status(200).send(data);
+// };
 
 const findAll = async (req, res, next) => {
-  const data = await Post.find();
+    const data = await Post.find()
+        .populate('user', 'email username role')
+        .populate('categories', 'name')
+        .populate('stars', 'email username role')
+        .populate('comments');
 
-  return res.status(200).send(data);
+    return res.status(200).send(data);
 };
 
 const create = async (req, res, next) => {
-  // console.log(req.body);
-  const post = await new Post({
-    user: req.body.userId,
-    title: req.body.title,
-    date: res.body.date,
-    category: req.body.category,
-    contentPost: req.body.contentPost,
-  }).save();
-  return res.status(201).send({ data: post });
+    console.log(req.body);
+    const post = await new Post({
+        user: req.body.user,
+        title: req.body.title,
+        content: req.body.content,
+        categories: req.body.categories,
+    }).save();
+    return res.status(201).send({ data: post });
 };
 
-export default { create, findAll, find, findUser };
+export default { create, findAll, find };
