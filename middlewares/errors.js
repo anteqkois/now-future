@@ -37,7 +37,7 @@ const handleValidationErrors = (err) => {
         (() => {
             const { keyValue } = err;
             const name = Object.keys(keyValue)[0];
-            keyValue['name'] = 'Już istnieje';
+            keyValue[name] = 'Już istnieje';
             errors = { ...keyValue };
         })();
 

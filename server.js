@@ -29,7 +29,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/posts', postRoutes);
 app.use('/api/v1/comments', commentRoutes);
-app.use('/api/v1/category', categoryRoutes);
+app.use('/api/v1/categories', categoryRoutes);
 
 if (process.env.MODULE === 'production') {
     app.use(express.static(join(__dirname, 'client/build')));

@@ -8,7 +8,8 @@ export const commentSchema = mongoose.Schema(
         },
         content: {
             type: String,
-            required: [true, 'Komentarz musi zawierać kontent'],
+            required: [true, 'Brak treści komentarza'],
+            minLength: [20, 'Minimalna długość treści to 20 znaków'],
         },
         stars: [
             {

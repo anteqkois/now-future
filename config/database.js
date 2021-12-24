@@ -36,11 +36,10 @@ const url =
 
 const database = mongoose
     .connect(url, {
-        useNewUrlParser: true,
-        // useCreateIndex: true,
-        autoIndex: true, //make this also true
         useUnifiedTopology: true,
-        // useFindAndModify: false,
+        useNewUrlParser: true,
+        // autoIndex: true, //make this also true
+        // useCreateIndex: true, //make this true
     })
     .then(() => {
         console.log(`Server connected with database`);

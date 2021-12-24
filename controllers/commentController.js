@@ -3,6 +3,17 @@ import database from '../config/database.js';
 import Comment from '../database/models/comment.js';
 import { handleValidationErrors, createApiError } from '../middlewares/errors.js';
 
+const findAll = async (req, res, next) => {
+    try {
+        const data = await Comment.find()
+            .populate('user', 'email username role')
+            .populate('stars', 'email username role');
+
+        return res.status(200).send(data);
+    } catch (error) {
+        createApiError('Nie znaleziono komentarzy w bazie danych', 404);
+    }
+};
 const find = async (req, res, next) => {
     try {
         const data = await Comment.find({
@@ -25,7 +36,6 @@ const create = async (req, res, next) => {
         }).save();
 
         req.body.comment = comment;
-        // return res.status(201).send({ data: comment });
     } catch (error) {
         error = handleValidationErrors(error);
         return res.status(400).json({ error });
@@ -56,12 +66,13 @@ const update = async (req, res, next) => {
 const remove = async (req, res, next) => {
     try {
         const comment = await Comment.deleteOne({
-            _id: req.params.id,
+            _id: req.params.idComment,
         });
+        comment.deletedCount === 0 && createApiError('Nie znaleziono komentarza w bazie danych', 404);
         return res.status(201).send({ data: 'Usunięto komentarz' });
     } catch (error) {
         createApiError('Nie znaleziono komentarza w bazie danych', 404);
     }
 };
 
-export default { create, find, remove };
+export default { create, find, findAll, update, remove };

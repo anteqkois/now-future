@@ -44,12 +44,15 @@ const logout = (req, res) => {
 };
 
 const signup = async (req, res, next) => {
-    const { email, username, password, role } = req.body;
-
     try {
-        const user = await User.create({ email, username, password, role });
+        const user = await User.create({
+            email: req.body.email,
+            username: req.body.username,
+            password: req.body.password,
+            role: req.body.role,
+        });
     } catch (error) {
-        error = handleValidationErrors(err);
+        error = handleValidationErrors(error);
         return res.status(400).json({ error });
     }
     next();

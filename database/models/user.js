@@ -7,14 +7,16 @@ export const userSchema = mongoose.Schema(
         email: {
             type: String,
             required: [true, 'Wprowadź e-mail'],
-            unique: [true, 'Konto na podany e-mail już istnieje'],
+            // unique: [true, 'Konto na podany e-mail już istnieje'],
+            index: { unique: true, sparse: true },
             lowercase: true,
             validate: [validator.isEmail, 'Niepoprawny e-mail'],
         },
         username: {
             type: String,
             required: [true, 'Wprowadź nazwę'],
-            unique: [true, 'Nazwa użytkownika jest zajęta'],
+            // unique: [true, 'Nazwa użytkownika jest zajęta'],
+            index: { unique: true, sparse: true },
             lowercase: true,
             minlength: [6, 'Minimalna ilość znaków nazwy użytkownika to 6'],
         },
