@@ -11,6 +11,6 @@ router.get('/:title', commentController.find);
 router.post('/', catchAsyncErrors(commentController.create));
 
 //PUT
-router.post('/:id', catchAsyncErrors(commentController.update));
+router.put('/:id', catchAsyncErrors(commentController.update));
 
 export default router;

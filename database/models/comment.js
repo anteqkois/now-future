@@ -8,6 +8,7 @@ export const commentSchema = mongoose.Schema(
         },
         content: {
             type: String,
+            required: [true, 'Komentarz musi zawierać kontent'],
         },
         stars: [
             {

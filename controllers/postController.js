@@ -1,6 +1,7 @@
 import database from '../config/database.js';
 
 import Post from '../database/models/post.js';
+import { handleValidationErrors, createApiError } from '../middlewares/errors.js';
 
 // ADD FIND BY USER, CATEGORY, POPULARITY
 const find = async (req, res, next) => {
@@ -37,14 +38,40 @@ const findAll = async (req, res, next) => {
 };
 
 const create = async (req, res, next) => {
-    console.log(req.body);
-    const post = await new Post({
-        user: req.body.user,
-        title: req.body.title,
-        content: req.body.content,
-        categories: req.body.categories,
-    }).save();
-    return res.status(201).send({ data: post });
+    try {
+        const post = await new Post({
+            user: req.body.user,
+            title: req.body.title,
+            content: req.body.content,
+            categories: req.body.categories,
+        }).save();
+        return res.status(201).send({ data: post });
+    } catch (error) {
+        error = handleValidationErrors(error);
+        return res.status(400).json({ error });
+    }
 };
 
-export default { create, findAll, find };
+const addComment = async (req, res, next) => {
+    try {
+        const post = await Post.findById(req.params.id);
+        post.comments.push(req.body.comment._id);
+        post.save();
+        return res.status(201).send({ data: post });
+    } catch (error) {
+        createApiError('Nie znaleziono postu w bazie danych', 404);
+    }
+};
+
+const deleteComment = async (req, res, next) => {
+    try {
+        const post = await Post.findById(req.params.id);
+        post.comments.pull(req.params.idComment);
+        post.save();
+        next();
+    } catch (error) {
+        createApiError('Nie znaleziono postu w bazie danych', 404);
+    }
+};
+
+export default { create, findAll, find, addComment, deleteComment };

@@ -21,6 +21,7 @@ import database from './config/database.js';
 
 app.set('port', process.env.PORT || 8080);
 
+//Add helmet middlewares, express-rate-limit
 app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));

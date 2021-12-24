@@ -44,11 +44,6 @@ const logout = (req, res) => {
 };
 
 const signup = async (req, res, next) => {
-    // !req.body.username && next(createApiError(`Brak nazwy używkownika`, 422));
-    // !req.body.email && next(createApiError(`Brak e-maila`, 422));
-    // !req.body.password && next(createApiError(`Brak hasła`, 422));
-    // !req.body.role && next(createApiError(`Brak typu używkonika`, 422));
-
     const { email, username, password, role } = req.body;
 
     try {
