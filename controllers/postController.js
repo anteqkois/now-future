@@ -6,7 +6,7 @@ import { handleValidationErrors, createApiError } from '../middlewares/errors.js
 // ADD FIND BY USER, CATEGORY, POPULARITY
 const find = async (req, res, next) => {
     const data = await Post.find({
-        category: req.params.category,
+        _id: req.params.id,
     })
         .populate('user', 'email username role')
         .populate('categories', 'name')
@@ -16,13 +16,19 @@ const find = async (req, res, next) => {
     return res.status(200).send(data);
 };
 
+//To search by search Text function use search method, to search by params.query use searcg method
 const findAll = async (req, res, next) => {
-    const data = await Post.find()
+    let data = await Post.find()
+        .search(req.query.search)
+        .searchByParams(req.query)
         .populate('user', 'email username role')
         .populate('categories', 'name')
         .populate('stars', 'email username role')
         .populate('comments');
 
+    if (data.length === 0) {
+        return res.status(404).send('Brak pasujących postów');
+    }
     return res.status(200).send(data);
 };
 

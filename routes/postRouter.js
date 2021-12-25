@@ -7,8 +7,7 @@ import commentController from '../controllers/commentController.js';
 
 //GET
 router.get('/', postController.findAll);
-router.get('/:category', postController.find);
-// router.get('/user/:user', postController.findUser);
+router.get('/:id', postController.find);
 
 //POST
 router.post('/', catchAsyncErrors(postController.create));

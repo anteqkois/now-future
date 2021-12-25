@@ -45,8 +45,23 @@ const Post = mongoose.Schema(
     },
 );
 
-Post.query.byCategory = (category) => {
-    return this.where({ categories: category });
+Post.index({ title: 'text', content: 'text' });
+
+Post.query.searchByParams = function (searchParams) {
+    let searchObject = {};
+
+    for (const [key, value] of Object.entries(searchParams)) {
+        if (key === 'search') continue;
+        searchObject[key] = value;
+    }
+    return this.where({
+        ...searchObject,
+    });
+};
+
+Post.query.search = function (searchText) {
+    let searchObject = searchText ? { $text: { $search: searchText } } : {};
+    return this.find(searchObject);
 };
 
 export default mongoose.model('Post', Post);

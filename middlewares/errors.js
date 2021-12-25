@@ -24,7 +24,7 @@ const createApiError = (message, status) => {
     throw err;
 };
 
-const catchErrors = (err, req, res, next) => {
+const  catchErrors = (err, req, res, next) => {
     // return res.status(err.status || 500).send(err.message);
     return res.status(err.status || 500).json({ error: err.message });
     next();
