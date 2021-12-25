@@ -6,6 +6,7 @@ import { handleValidationErrors, createApiError } from '../middlewares/errors.js
 const findAll = async (req, res, next) => {
     try {
         const data = await Comment.find()
+            .select('user content stars createdAt updatedAt')
             .populate('user', 'email username role')
             .populate('stars', 'email username role');
 
@@ -18,7 +19,7 @@ const find = async (req, res, next) => {
     try {
         const data = await Comment.find({
             _id: req.params.id,
-        })
+        }).select('user content stars createdAt updatedAt')
             .populate('user', 'email username role')
             .populate('stars', 'email username role');
 

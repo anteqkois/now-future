@@ -3,15 +3,15 @@ import Category from '../database/models/category.js';
 import { createApiError, handleValidationErrors } from '../middlewares/errors.js';
 
 const findAll = async (req, res, next) => {
-    const data = await Category.find();
+    const data = await Category.find().select('_id name createdAt updatedAt');
     return res.status(200).send(data);
 };
 
 const find = async (req, res, next) => {
     const category = await Category.find({
         _id: req.params.id,
-    });
-    console.log(category)
+    }).select('_id name createdAt updatedAt');
+    console.log(category);
     !category[0] && createApiError('Nie znaleziono kategorii', 404);
 
     return res.status(200).send(category);

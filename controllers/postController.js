@@ -8,6 +8,7 @@ const find = async (req, res, next) => {
     const data = await Post.find({
         _id: req.params.id,
     })
+        .select('_id user title content categories comments stars createdAt updatedAt')
         .populate('user', 'email username role')
         .populate('categories', 'name')
         .populate('stars', 'email username role')
@@ -18,9 +19,12 @@ const find = async (req, res, next) => {
 
 //To search by search Text function use search method, to search by params.query use searcg method
 const findAll = async (req, res, next) => {
-    let data = await Post.find()
-        .search(req.query.search)
+    let searchObject = req.query.search ? { $text: { $search: req.query.search } } : {};
+
+    let data = await Post.find(searchObject)
+        // .search(req.query.search)
         .searchByParams(req.query)
+        .select('_id user title content categories comments stars createdAt updatedAt')
         .populate('user', 'email username role')
         .populate('categories', 'name')
         .populate('stars', 'email username role')
