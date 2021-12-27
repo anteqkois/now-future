@@ -12,6 +12,7 @@ import TestReduxUser from './components/TestReduxUser';
 
 import Login from './pages/Login';
 import Register from './pages/Register';
+import Navbar from './containers/Navigation'
 
 const PrivateRoute = ({ children }) => {
     // const { user } = useSelector((state) => state.user);
@@ -39,10 +40,7 @@ function App() {
                                 path="/home"
                                 element={
                                     <PrivateRoute>
-                                        <h1>
-                                            Tu będzie stron startowa po zalogowaniu + tu zamieszczę możliwośc
-                                            szukania po # itdl.
-                                        </h1>
+                                        <Navbar />
                                     </PrivateRoute>
                                 }
                             />

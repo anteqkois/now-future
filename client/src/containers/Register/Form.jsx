@@ -79,7 +79,7 @@ function Form() {
         <>
             <StyledForm onSubmit={formik.handleSubmit}>
                 <InputContainer>
-                    <p>typ uytkownika</p>
+                    {/* <p>typ użytkownika</p> */}
                     <StyledRadioArea role="group" aria-labelledby="my-radio-group">
                         <RadioButton
                             placeholder="uczeń"
