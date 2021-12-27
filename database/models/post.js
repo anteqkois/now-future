@@ -59,9 +59,9 @@ Post.query.searchByParams = function (searchParams) {
     });
 };
 
-Post.query.search = function (searchText) {
-    let searchObject = searchText ? { $text: { $search: searchText } } : {};
-    return this.find(searchObject);
-};
+// Post.query.search = function (searchText) {
+//     let searchObject = searchText ? { $text: { $search: searchText } } : {};
+//     return this.find(searchObject);
+// };
 
 export default mongoose.model('Post', Post);

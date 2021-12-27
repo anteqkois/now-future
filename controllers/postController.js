@@ -22,7 +22,6 @@ const findAll = async (req, res, next) => {
     let searchObject = req.query.search ? { $text: { $search: req.query.search } } : {};
 
     let data = await Post.find(searchObject)
-        // .search(req.query.search)
         .searchByParams(req.query)
         .select('_id user title content categories comments stars createdAt updatedAt')
         .populate('user', 'email username role')

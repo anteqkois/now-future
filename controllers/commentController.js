@@ -19,7 +19,8 @@ const find = async (req, res, next) => {
     try {
         const data = await Comment.find({
             _id: req.params.id,
-        }).select('user content stars createdAt updatedAt')
+        })
+            .select('user content stars createdAt updatedAt')
             .populate('user', 'email username role')
             .populate('stars', 'email username role');
 
@@ -76,4 +77,26 @@ const remove = async (req, res, next) => {
     }
 };
 
-export default { create, find, findAll, update, remove };
+const addStar = async (req, res, next) => {
+    try {
+        const comment = await Comment.findById(req.params.id);
+        comment.stars.push(req.body.user);
+        comment.save();
+        return res.status(201).send({ data: comment });
+    } catch (error) {
+        createApiError('Nie komentarza postu w bazie danych', 404);
+    }
+};
+
+const removeStar = async (req, res, next) => {
+    try {
+        const comment = await Comment.findById(req.params.id);
+        comment.stars.pull(req.params.idUser);
+        comment.save();
+        return res.status(201).send({ data: 'Usunięto gwiazdkę z komentrza' });
+    } catch (error) {
+        createApiError('Nie znaleziono komentarza postu w bazie danych', 404);
+    }
+};
+
+export default { create, find, findAll, update, remove, addStar, removeStar };
