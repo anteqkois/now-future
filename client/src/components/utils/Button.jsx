@@ -31,7 +31,9 @@ const StyledButton = styled.button`
 
         switch (option) {
             case 'normal':
-                property = 'linear-gradient(35.25deg, #4d0a83 38.05%, #a2141b 90%)';
+                // property = 'linear-gradient(35.25deg, #4d0a83 38.05%, #a2141b 90%)';
+                property = 'linear-gradient(15deg, rgba(98,0,238,1) 40%, rgba(48,0,116,1) 80%)';
+                // property = 'linear-gradient(15deg, rgba(102,0,116,1) 40%, rgba(38,0,43,1) 80%)';
                 break;
             // case 'white':
             //     property = theme.colors.textOposite;

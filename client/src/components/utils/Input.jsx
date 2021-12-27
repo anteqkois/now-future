@@ -2,8 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 const StyledContainer = styled.div`
-    margin: 10px 0 15px 0;
-    /* margin: 15px 0 25px 0; */
+    margin: ${({ theme }) => theme.spacing.s} 0;
     position: relative;
     background-color: transparent;
 `;
@@ -81,7 +80,7 @@ function Input({ type, placeholder, id, name, onChange, value, error }) {
             />
             <StyledLabel htmlFor={name}>{placeholder}</StyledLabel>
             <StyledBorder error={error} />
-            <StyledError>{error ? `*${error}` : ''}</StyledError>
+            <StyledError>{error ? `* ${error}` : ''}</StyledError>
         </StyledContainer>
     );
 }

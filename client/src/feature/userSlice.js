@@ -19,9 +19,9 @@ export const logout = createAsyncThunk('users/logout', async (thunkAPI) => {
   }
 });
 
-export const signup = createAsyncThunk('users/signup', async ({ username, email, password }, thunkAPI) => {
+export const signup = createAsyncThunk('users/signup', async ({ username, email, password, role }, thunkAPI) => {
   try {
-    const response = await axios.post('/api/v1/auth/signup', { username, email, password });
+    const response = await axios.post('/api/v1/auth/signup', { username, email, password, role });
     return response.data;
   } catch (error) {
     return thunkAPI.rejectWithValue(error.response.data);

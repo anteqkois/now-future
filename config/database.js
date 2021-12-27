@@ -13,42 +13,23 @@ const dbSetting = process.env.DB_SETTING;
 const urlLocalDatabase = `mongodb://localhost:27017/exampleDatabase`;
 
 const url =
-  process.env.DB_MODULE === 'production'
-    ? `mongodb+srv://${dbUser}:${dbPassword}@${dbName}.ffjgf.mongodb.net/${dbName}?retryWrites=true&w=majority`
-    : urlLocalDatabase;
-
-// const database = () => {
-//   try {
-//     const database = mongoose.connect(url, {
-//       useNewUrlParser: true,
-//       useCreateIndex: true,
-//       useUnifiedTopology: true,
-//       useFindAndModify: false,
-//     });
-//     console.log(`Server connected with database`);
-//     // return database;
-//   } catch (error) {
-//     console.log(
-//       `Server can't connected with database, error message: ${error}`,
-//     );
-//   }
-// };
+    process.env.DB_MODULE === 'production'
+        ? `mongodb+srv://${dbUser}:${dbPassword}@${dbName}.ffjgf.mongodb.net/${dbName}?retryWrites=true&w=majority`
+        : urlLocalDatabase;
 
 const database = mongoose
-  .connect(url, {
-    useNewUrlParser: true,
-    // useCreateIndex: true,
-    useUnifiedTopology: true,
-    // useFindAndModify: false,
-  })
-  .then(() => {
-    console.log(`Server connected with database`);
-  })
-  .catch((error) => {
-    console.log(
-      `Server can't connected with database, error message: ${error}`,
-    );
-  });
+    .connect(url, {
+        useUnifiedTopology: true,
+        useNewUrlParser: true,
+        // autoIndex: true, //make this also true
+        // useCreateIndex: true, //make this true
+    })
+    .then(() => {
+        console.log(`Server connected with database`);
+    })
+    .catch((error) => {
+        console.log(`Server can't connected with database, error message: ${error}`);
+    });
 console.log(`Server connected with database`);
 
 export default database;
