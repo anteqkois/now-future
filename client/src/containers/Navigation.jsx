@@ -12,7 +12,7 @@ import Button from '../components/utils/Button'
 
 const Navbar = styled.div`
   width: 100%;
-  height: 4.5rem;
+  height: ${({ theme }) => theme.spacing.xl5};
   /* background: whitesmoke; */
   position: fixed;
   display: flex;
@@ -22,12 +22,12 @@ const Navbar = styled.div`
 `
 
 const SearchContainer = styled.div`
- /* a to byłoby dobrze dać całkiem na środek bo flex jakby daje równe spacje między napisem nowfuture a usernamem, wiec ciezko zeby bylo rowno */
   cursor: pointer;
   position: absolute;
-  top: 0;
+  top: 5px;
   left: calc(50% - 56px);
   padding: 12px 40px;
+  /* todo: wysrodkowac poziomo teraz XDDD */
 
   &:after {
     content: '';
@@ -126,15 +126,15 @@ function Navigation() {
           </CloseContainer>
 
           <CategoriesContainer>
-            <Category type="radio" />
-            <Category type="radio" />
-            <Category type="radio" />
-            <Category type="radio" />
-            <Category type="radio" />
-            <Category type="radio" />
-            <Category type="radio" />
-            <Category type="radio" />
-            <Category type="radio" />
+            <Category type="checkbox" />
+            <Category type="checkbox" />
+            <Category type="checkbox" />
+            <Category type="checkbox" />
+            <Category type="checkbox" />
+            <Category type="checkbox" />
+            <Category type="checkbox" />
+            <Category type="checkbox" />
+            <Category type="checkbox" />
           </CategoriesContainer>
         
           <ButtonContainer>
