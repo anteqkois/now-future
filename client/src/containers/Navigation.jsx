@@ -24,9 +24,10 @@ const Navbar = styled.div`
 const SearchContainer = styled.div`
  /* a to byłoby dobrze dać całkiem na środek bo flex jakby daje równe spacje między napisem nowfuture a usernamem, wiec ciezko zeby bylo rowno */
   cursor: pointer;
-  position: relative;
-  padding: 0.7rem 2.5rem;
-  border-radius: 12px 12px 0 0;
+  position: absolute;
+  top: 0;
+  left: calc(50% - 56px);
+  padding: 12px 40px;
 
   &:after {
     content: '';
