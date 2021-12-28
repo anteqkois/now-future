@@ -12,7 +12,8 @@ import TestReduxUser from './components/TestReduxUser';
 
 import Login from './pages/Login';
 import Register from './pages/Register';
-import Navbar from './containers/Navigation'
+import Navbar from './containers/Navigation';
+import TestPosts from './containers/Post/TestPosts';
 
 const PrivateRoute = ({ children }) => {
     // const { user } = useSelector((state) => state.user);
@@ -36,6 +37,7 @@ function App() {
                             <Route path="/register" element={<Register />} />
                             <Route path="/signup" element={<h1>Sigh Up</h1>} />
                             <Route path="/redux" element={<TestReduxUser />} />
+                            <Route path="/posts" element={<TestPosts />} />
                             <Route
                                 path="/home"
                                 element={

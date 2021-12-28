@@ -10,6 +10,15 @@ export const getAllPosts = createAsyncThunk('posts/', async (thunkAPI) => {
     }
 });
 
+export const getPost = createAsyncThunk('posts/:id', async ({ id }, thunkAPI) => {
+    try {
+        const response = await posts.get(`/api/v1/posts/${id}`);
+        return response.data;
+    } catch (error) {
+        return thunkAPI.rejectWithValue(error.response.data);
+    }
+});
+
 const postsSlice = createSlice({
     name: 'posts',
     initialState: {
@@ -27,6 +36,13 @@ const postsSlice = createSlice({
             state.posts = action.payload;
         });
         builder.addCase(getAllPosts.rejected, (state, action) => {
+            state.error = action.payload.error;
+        });
+        builder.addCase(getPost.fulfilled, (state, action) => {
+            console.log(action.payload);
+            state.posts = action.payload;
+        });
+        builder.addCase(getPost.rejected, (state, action) => {
             state.error = action.payload.error;
         });
     },

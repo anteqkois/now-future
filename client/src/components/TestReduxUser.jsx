@@ -50,16 +50,17 @@ function TestReduxUser() {
                 <button onClick={handleLogin}>Zaloguj się!</button>
                 <button onClick={handleSignup}>Stórz konto!</button>
                 <button onClick={() => navigate('/private')}>Do private routa</button>
-                <button onClick={handleGetAllPsts}>Pobierz posty</button>
                 {userStore.user && (
                     <>
                         <button onClick={() => dispatch(logout())}>Logout</button>
-                        <h1>
+                        <p>
                             {userStore.user.username}
-                            {userStore.user.email}
-                        </h1>
+                        </p>
                     </>
                 )}
+                <button onClick={handleGetAllPsts}>Pobierz posty</button>
+                <button onClick={handleGetAllPsts}>Pobierz post</button>
+                <button onClick={handleGetAllPsts}>Pobierz posty</button>
             </StyledTest>
         </>
     );
