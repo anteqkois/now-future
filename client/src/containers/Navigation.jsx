@@ -66,7 +66,7 @@ const SearchFilters = styled.div`
 
 const InputContainer = styled.div`
     display: flex;
-    margin: -5px 40px;
+    margin: 0 30px;
     overflow: hidden;
 `
 
