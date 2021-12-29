@@ -5,15 +5,17 @@ import { useState } from 'react';
 import { ReactComponent as NowFuture } from '../assets/nowfuture.svg';
 import { ReactComponent as Search } from '../assets/search.svg';
 import { ReactComponent as Close } from '../assets/close.svg';
+import { ReactComponent as Toggle } from '../assets/toggle.svg';
 
 import Input from '../components/utils/Input'
 import Button from '../components/utils/Button'
+import Sidebar from './Sidebar';
 
 
 const Navbar = styled.div`
   width: 100%;
   height: ${({ theme }) => theme.spacing.xl5};
-  /* background: whitesmoke; */
+  background: ${({ theme }) => theme.colors.grey};
   position: fixed;
   display: flex;
   justify-content: space-between;
@@ -21,10 +23,28 @@ const Navbar = styled.div`
   padding: 0 ${({ theme }) => theme.spacing.m};
 `
 
+const ToggleContainer = styled.div`
+  display: flex;
+  cursor: pointer;
+
+  ${({ theme }) => theme.media.tablet} {
+    display: ${props => props.display.value};
+  }
+`
+
+const NameContainer = styled.div`
+  display: none;
+
+  ${({ theme }) => theme.media.tablet} {
+    display: ${props => props.display.value};
+  }
+`
+
 const SearchContainer = styled.div`
+  display: flex;
   cursor: pointer;
   position: absolute;
-  top: 5px;
+  top: 8px;
   left: calc(50% - 56px);
   padding: 12px 40px;
   /* todo: wysrodkowac poziomo teraz XDDD */
@@ -50,18 +70,26 @@ const SearchContainer = styled.div`
 `
 
 const Username = styled.p`
+  display: flex;
   font-size: ${({ theme }) => theme.typography.H6};
 `
 
 const SearchFilters = styled.div`
-    /* dalem to na fixed bo bedzie tak samo jak navbar przylepiony i ponad wszystkim, u know haha  */
     position: fixed;
-    width: 450px;
-    height: 250px;
-    background: whitesmoke;
-    margin-left: calc(50% - 225px);
+    width: 300px;
+    height: 325px;
+    background: ${({ theme }) => theme.colors.grey};
+    margin-left: calc(50% - 150px);
     margin-top: 5rem;
     border-radius: 12px;
+    z-index: ${({ theme }) => theme.zIndex.level3};
+
+    ${({ theme }) => theme.media.tablet} {
+      /* dalem to na fixed bo bedzie tak samo jak navbar przylepiony i ponad wszystkim, u know haha  */
+      width: 450px;
+      height: 250px;
+      margin-left: calc(50% - 225px);
+    }
 `
 
 const InputContainer = styled.div`
@@ -78,7 +106,6 @@ const CloseContainer = styled.div`
 `
 
 const CategoriesContainer = styled.div`
-    /* background: red; */
     margin: -20px 20px;
     height: 140px;
 `
@@ -87,7 +114,7 @@ const Category = styled.input`
     all: unset;
     display: inline-block;
     margin-left: 8px;
-    width: 125px;
+    width: 115px;
     height: 30px;
     border: 1px solid ${({ theme }) => theme.colors.textOnBackground};
     border-radius: 22px;
@@ -99,6 +126,10 @@ const Category = styled.input`
         color: ${({ theme }) => theme.colors.textOnPrimary};
         border: 2px solid ${({ theme }) => theme.colors.primary};
     }
+
+    ${({ theme }) => theme.media.tablet} {
+      width: 125px
+    }
 `
 
 const ButtonContainer = styled.div`
@@ -108,11 +139,12 @@ const ButtonContainer = styled.div`
 `
 
 function Navigation() {
-  const [show, setShow] = useState(false);
+  const [filters, setFilters] = useState(false);
+  const [sidebar, setSidebar] = useState(false);
 
   return (
     <>
-      {show ? 
+      {filters ? 
         <SearchFilters>
           <InputContainer>
             <Input 
@@ -121,7 +153,7 @@ function Navigation() {
             />  
           </InputContainer>
 
-          <CloseContainer onClick={() => setShow(false)}>
+          <CloseContainer onClick={() => setFilters(false)}>
               <Close />
           </CloseContainer>
 
@@ -145,12 +177,24 @@ function Navigation() {
         </SearchFilters>     
       : null} 
 
+      {
+        sidebar ?
+          <Sidebar />
+        : null
+      }
+
       {/* ogólnie to fajnie byłoby dać transition podczas pojawiania sie tych filtrów, aczkolwiek nie wiem jak to zrobic xD */}
 
       <Navbar>
+        <NameContainer display={{ value: "flex" }}>
           <NowFuture />
+        </NameContainer>
 
-        <SearchContainer onClick={() => setShow(!show)}>
+        <ToggleContainer display={{ value: "none"}} onClick={() => setSidebar(!sidebar)}>
+          <Toggle />
+        </ToggleContainer>
+
+        <SearchContainer onClick={() => setFilters(!filters)}>
           <Search />
         </SearchContainer>
 
