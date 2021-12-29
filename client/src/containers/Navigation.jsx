@@ -13,15 +13,15 @@ import Sidebar from './Sidebar';
 
 
 const Navbar = styled.div`
-  width: 100%;
-  height: ${({ theme }) => theme.spacing.xl5};
-  background: ${({ theme }) => theme.colors.grey};
-  position: fixed;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 ${({ theme }) => theme.spacing.m};
-`
+    width: 100%;
+    height: ${({ theme }) => theme.spacing.xl5};
+    background: ${({ theme }) => theme.colors.lightGrey};
+    position: fixed;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 ${({ theme }) => theme.spacing.m};
+`;
 
 const ToggleContainer = styled.div`
   display: flex;
@@ -78,19 +78,19 @@ const SearchFilters = styled.div`
     position: fixed;
     width: 300px;
     height: 325px;
-    background: ${({ theme }) => theme.colors.grey};
+    background: ${({ theme }) => theme.colors.lightGrey};
     margin-left: calc(50% - 150px);
     margin-top: 5rem;
     border-radius: 12px;
     z-index: ${({ theme }) => theme.zIndex.level3};
 
     ${({ theme }) => theme.media.tablet} {
-      /* dalem to na fixed bo bedzie tak samo jak navbar przylepiony i ponad wszystkim, u know haha  */
-      width: 450px;
-      height: 250px;
-      margin-left: calc(50% - 225px);
+        /* dalem to na fixed bo bedzie tak samo jak navbar przylepiony i ponad wszystkim, u know haha  */
+        width: 450px;
+        height: 250px;
+        margin-left: calc(50% - 225px);
     }
-`
+`;
 
 const InputContainer = styled.div`
     display: flex;

@@ -11,7 +11,8 @@ const lightColors = {
     textOnPrimary: '#FFFFFF',
     textOnSecondary: '#000000',
     textOnBackground: '#000000',
-    grey: '#E5E5E5',
+    grey: '#837d83',
+    lightGrey: '#E5E5E5',
 };
 
 const darkColors = {

@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import Post from './Post';
+import PostContainer from './PostContainer';
 
 const posts = [
     {
@@ -209,7 +209,7 @@ const TestPosts = () => {
     return (
         <StyledPostContainer>
             {posts.map((post) => (
-                <Post key={post._id} {...post} />
+                <PostContainer key={post._id} {...post} />
             ))}
         </StyledPostContainer>
     );

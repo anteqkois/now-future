@@ -25,7 +25,7 @@ const StyledNavItem = styled.a`
     color: ${({ theme }) => theme.colors.textOnBackground};
     /* box-shadow: 0 0 5px #eee; */
     display: flex;
-    flex: direction: row;
+    flex-direction: row;
     opacity: 0.9;
     margin: 15px 0 0 0;
     padding: 15px 15px;
@@ -35,7 +35,7 @@ const StyledNavItem = styled.a`
 
     &:hover {
       cursor: pointer;
-      background: ${({ theme }) => theme.colors.grey};
+      background: ${({ theme }) => theme.colors.lightGrey};
       opacity: 1;
       transition: .3s ease;
     }
@@ -43,7 +43,7 @@ const StyledNavItem = styled.a`
     &:first-child {
         margin-top: 20px;
     }
-`
+`;
 
 const StyledNavItemText = styled.p`
     font-size: ${({ theme }) => theme.typography.subtitle1};
@@ -59,12 +59,13 @@ const LogoContainer = styled.div`
 
 const StyledLogoutItem = styled.a`
     display: flex;
-    /* background-image: linear-gradient(to right, ${({ theme }) => theme.colors.primary} 0%, ${({ theme }) => theme.colors.primaryVariant}  51%, ${({ theme }) => theme.colors.primary}  100%); */
+    /* background-image: linear-gradient(to right, ${({ theme }) => theme.colors.primary} 0%, ${({ theme }) =>
+        theme.colors.primaryVariant}  51%, ${({ theme }) => theme.colors.primary}  100%); */
     /* background-size: 200% auto; */
-    background: ${({ theme }) => theme.colors.grey};
+    background: ${({ theme }) => theme.colors.lightGrey};
     color: ${({ theme }) => theme.colors.textOnBackground};
     box-shadow: 2px 5px 5px ${({ theme }) => theme.colors.primaryVariant};
-    transition: .3s ease;
+    transition: 0.3s ease;
     padding: 15px 15px;
     border-radius: 0 10px 10px 0;
 
@@ -74,7 +75,7 @@ const StyledLogoutItem = styled.a`
         text-decoration: none;
         box-shadow: 4px 10px 15px ${({ theme }) => theme.colors.primaryVariant};
     }
-`
+`;
 
 function Sidebar() {
     return (
