@@ -14,6 +14,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Navbar from './containers/Navigation';
 import TestPosts from './containers/Post/TestPosts';
+import Sidebar from './containers/Sidebar';
 
 const PrivateRoute = ({ children }) => {
     // const { user } = useSelector((state) => state.user);
@@ -43,6 +44,7 @@ function App() {
                                 element={
                                     <PrivateRoute>
                                         <Navbar />
+                                        {/* <Sidebar /> */}
                                     </PrivateRoute>
                                 }
                             />
