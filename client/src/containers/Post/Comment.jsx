@@ -9,7 +9,7 @@ const StyledComment = styled.div`
     grid-template-columns: 40px auto;
     grid-template-rows: 50px auto 20px;
     padding: ${({ theme }) => theme.spacing.s};
-    gap: ${({ theme }) => theme.spacing.xs};
+    gap: ${({ theme }) => theme.spacing.xxs};
 `;
 
 const StyledAvatar = styled(Avatar)`

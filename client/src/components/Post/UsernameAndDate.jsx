@@ -15,7 +15,7 @@ const StyledUsernameAndDate = styled.div`
         }
 
         :nth-of-type(2) {
-            ${({ theme }) => theme.typography.overline}
+            ${({ theme }) => theme.typography.caption};
             color: ${({ theme }) => theme.colors.grey};
         }
     }

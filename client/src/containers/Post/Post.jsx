@@ -44,7 +44,7 @@ const Post = ({ user, title, content, categories, createdAt, updatedAt }) => {
             <Content content={content} />
             <StyledCategoriesContainer>
                 {categories.map((category) => (
-                    <CategoryItem category={category} />
+                    <CategoryItem key={category._id} category={category} />
                 ))}
             </StyledCategoriesContainer>
             <StyledActionContainer>
