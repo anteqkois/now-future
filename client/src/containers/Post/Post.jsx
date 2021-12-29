@@ -5,8 +5,8 @@ import { convertDate } from './../../helpers/convertDate';
 const StyledPostContainer = styled.article`
     /* display: grid; */
     /* border: 1px solid ${({ theme }) => theme.colors}; */
-    padding: ${({ theme }) => theme.spacing.s};
-    box-shadow: #cacaca 5px 3px 10px;
+    /* padding: ${({ theme }) => theme.spacing.s}; */
+    box-shadow: #cac8c8 1px 1px 10px;
     border-radius: 5px;
 `;
 const StyledPost = styled.article`
@@ -14,17 +14,23 @@ const StyledPost = styled.article`
     display: grid;
     grid-template-columns: 50px auto 50px;
     grid-template-rows: 50px, 50px, auto, 50px, 50px;
+    padding: ${({ theme }) => theme.spacing.s};
     gap: ${({ theme }) => theme.spacing.xs};
 `;
 
 const StyledAvatar = styled.span`
     width: 50px;
     height: 50px;
-    grid-column: 1/2;
-    grid-row: 1/2;
     background-color: ${({ theme }) => theme.colors.primary};
     border-radius: 50%;
 `;
+
+const StyledPostAvatar = styled(StyledAvatar)`
+    grid-column: 1/2;
+    grid-row: 1/2;
+`;
+const StyledCommentAvatar = styled(StyledAvatar)``;
+
 const StyledUsernameAndTime = styled.div`
     grid-column: 2/3;
     grid-row: 1/2;
@@ -129,14 +135,56 @@ const StyledActionCounts = styled.div`
         padding-inline: ${({ theme }) => theme.spacing.xs};
         padding-block: ${({ theme }) => theme.spacing.xxs};
     }
-  
+`;
+
+const StyledComments = styled.div`
+    position: relative;
+    display: grid;
+    grid-template-columns: 50px auto 50px;
+    grid-template-rows: 50px, auto, 50px;
+    padding: ${({ theme }) => theme.spacing.s};
+    gap: ${({ theme }) => theme.spacing.xs};
+
+    ::before {
+        content: '';
+        position: absolute;
+        top: 70px;
+        left: 40px;
+        display: inline-block;
+        width: 100%;
+        height: calc(100% - 140px);
+        border: 1px solid ${({ theme }) => theme.colors.grey};
+        /* border-left:1px solid ${({ theme }) => theme.colors.grey}; */
+        border-radius: 5px;
+    }
+    ::after {
+        /* content: '';
+        position: absolute;
+        top: 0;
+        display: inline-block;
+        width: 100%;
+        height: 1px;
+        background-color: ${({ theme }) => theme.colors.grey}; */
+    }
+`;
+
+const StyledCommentContent = styled(StyledContent)`
+    /* background-color: ${({ theme }) => theme.colors.grey}; */
+    padding-left: ${({ theme }) => theme.spacing.l};
+`;
+
+const StyledCommentActionItems = styled(StyledActionItems)`
+    ::before,
+    ::after {
+        all: unset;
+    }
 `;
 
 const Post = ({ _id, user, title, content, categories, stars, comments, createdAt, updatedAt }) => {
     return (
         <StyledPostContainer>
             <StyledPost>
-                <StyledAvatar></StyledAvatar>
+                <StyledPostAvatar></StyledPostAvatar>
                 <StyledUsernameAndTime>
                     <p>{user.username}</p>
                     <p>{convertDate(createdAt)}</p>
@@ -154,10 +202,10 @@ const Post = ({ _id, user, title, content, categories, stars, comments, createdA
                     ))}
                 </StyledCategorieContainer>
                 <StyledEvents>
-                  <StyledActionCounts>
-                    <p>102 super</p>
-                    <p>38 komentarzy</p>
-                  </StyledActionCounts>
+                    <StyledActionCounts>
+                        <p>102 super</p>
+                        <p>38 komentarzy</p>
+                    </StyledActionCounts>
                     <StyledActionItems>
                         <div>
                             <span></span>
@@ -165,7 +213,7 @@ const Post = ({ _id, user, title, content, categories, stars, comments, createdA
                         </div>
                         <div>
                             <span></span>
-                            <p>Dodaj komentarz</p>
+                            <p>Komentarz</p>
                         </div>
                         <div>
                             <span></span>
@@ -174,6 +222,33 @@ const Post = ({ _id, user, title, content, categories, stars, comments, createdA
                     </StyledActionItems>
                 </StyledEvents>
             </StyledPost>
+            {comments.map((comment) => (
+                <StyledComments>
+                    <StyledCommentAvatar></StyledCommentAvatar>
+                    <StyledUsernameAndTime>
+                        <p>{comment.user.username}</p>
+                        <p>{convertDate(createdAt)}</p>
+                    </StyledUsernameAndTime>
+                    <StyledOptions>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </StyledOptions>
+                    <StyledCommentContent>{comment.content}</StyledCommentContent>
+                    <StyledEvents>
+                        <StyledActionCounts>
+                            <p>102 super</p>
+                            <p>38 komentarzy</p>
+                        </StyledActionCounts>
+                        <StyledCommentActionItems>
+                            <div>
+                                <span></span>
+                                <p>Super !</p>
+                            </div>
+                        </StyledCommentActionItems>
+                    </StyledEvents>
+                </StyledComments>
+            ))}
         </StyledPostContainer>
     );
 };
