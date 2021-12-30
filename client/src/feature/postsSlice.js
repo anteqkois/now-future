@@ -22,7 +22,7 @@ export const getPost = createAsyncThunk('posts/:id', async ({ id }, thunkAPI) =>
 const postsSlice = createSlice({
     name: 'posts',
     initialState: {
-        posts: null,
+        posts: [],
         error: null,
     },
     reducers: {

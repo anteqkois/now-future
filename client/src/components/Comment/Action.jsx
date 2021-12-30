@@ -3,24 +3,33 @@ import styled from 'styled-components';
 import { convertDate } from './../../helpers/convertDate';
 
 const StyledAction = styled.div`
-    grid-column: 2/3;
+    grid-column: 1/3;
     grid-row: 3/4;
     display: flex;
     align-items: center;
     div {
         display: flex;
         align-items: center;
-
+        p {
+            ${({ theme }) => theme.typography.caption};
+            padding-left: ${({ theme }) => theme.spacing.xxs};
+            padding-right: ${({ theme }) => theme.spacing.s};
+            white-space: nowrap;
+        }
         :nth-of-type(1) {
             svg {
                 margin-bottom: ${({ theme }) => theme.spacing.xxs};
             }
         }
+        :nth-of-type(3) {
+            p {
+                padding-right: unset;
+            }
+        }
     }
-    p {
-        ${({ theme }) => theme.typography.caption};
-        padding-left: ${({ theme }) => theme.spacing.xxs};
-        padding-right: ${({ theme }) => theme.spacing.s};
+
+    ${({ theme }) => theme.media.bigPhone} {
+        grid-column: 2/3;
     }
 `;
 
