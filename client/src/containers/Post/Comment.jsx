@@ -24,7 +24,11 @@ const Comment = ({ _id, user, content, stars, createdAt, updatedAt }) => {
         <StyledComment>
             <StyledAvatar />
             <Content username={user.username} content={content} />
-            <Action stars={stars} createdAt={createdAt} updatedAt={updatedAt} />
+            <Action
+                stars={stars}
+                createdAt={createdAt}
+                updatedAt={updatedAt}
+            />
         </StyledComment>
     );
 };

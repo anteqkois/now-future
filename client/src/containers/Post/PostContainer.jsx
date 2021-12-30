@@ -22,8 +22,15 @@ const PostContainer = ({ _id, user, title, content, categories, stars, comments,
                 categories={categories}
                 createdAt={createdAt}
                 updatedAt={updatedAt}
+                amountOfStars={stars.length}
+                amountOfComments={comments.length}
+                setShowComments={setShowComments}
             />
-            <LoadComments showComments={showComments} setShowComments={setShowComments} amountOfComments={comments.length} />
+            <LoadComments
+                showComments={showComments}
+                setShowComments={setShowComments}
+                amountOfComments={comments.length}
+            />
             {showComments && comments.map((comment) => <Comment {...comment} />)}
         </StyledPostContainer>
     );

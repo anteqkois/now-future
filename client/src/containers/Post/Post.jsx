@@ -34,7 +34,17 @@ const StyledActionContainer = styled.div`
     grid-row: 5/6;
 `;
 
-const Post = ({ user, title, content, categories, createdAt, updatedAt }) => {
+const Post = ({
+    user,
+    title,
+    content,
+    categories,
+    createdAt,
+    updatedAt,
+    amountOfStars,
+    amountOfComments,
+    setShowComments,
+}) => {
     return (
         <StyledPost>
             <StyledAvatar />
@@ -48,7 +58,11 @@ const Post = ({ user, title, content, categories, createdAt, updatedAt }) => {
                 ))}
             </StyledCategoriesContainer>
             <StyledActionContainer>
-                <ActionCount />
+                <ActionCount
+                    amountOfStars={amountOfStars}
+                    amountOfComments={amountOfComments}
+                    setShowComments={setShowComments}
+                />
                 <Action />
             </StyledActionContainer>
         </StyledPost>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import styled from 'styled-components';
 
 const StyledActionCounts = styled.div`
@@ -13,11 +13,25 @@ const StyledActionCounts = styled.div`
     }
 `;
 
-const ActionCount = () => {
+const ActionCount = ({ amountOfStars, amountOfComments, setShowComments }) => {
+    const commentString = useCallback(() => {
+        const lastDigit = amountOfComments % 10;
+
+        if (amountOfComments === 1) {
+            return 'komentarz';
+        } else if (lastDigit === 2 || lastDigit === 3 || lastDigit === 4) {
+            return 'komentarze';
+        }
+        return 'komentarzy';
+    }, [amountOfComments]);
     return (
         <StyledActionCounts>
-            <p>102 super</p>
-            <p>38 komentarzy</p>
+            <p>{amountOfStars} super</p>
+            <p
+                onClick={() => {
+                    setShowComments((prev) => !prev);
+                }}
+            >{`${amountOfComments} ${commentString()}`}</p>
         </StyledActionCounts>
     );
 };
