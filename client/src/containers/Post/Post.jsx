@@ -9,6 +9,7 @@ import Avatar from '../../components/utils/Avatar';
 import CategoryItem from '../../components/utils/CategoryItem';
 import ActionCount from '../../components/Post/ActionCount';
 import Action from './../../components/Post/Action';
+import { useSelector } from 'react-redux';
 
 const StyledPost = styled.div`
     display: grid;
@@ -45,11 +46,13 @@ const Post = ({
     amountOfComments,
     setShowComments,
 }) => {
+    const userStore = useSelector((state) => state.user);
+
     return (
         <StyledPost>
             <StyledAvatar />
             <UsernameAndDate user={user} createdAt={createdAt} />
-            <MoreIcon />
+            {userStore.user._id === user._id && <MoreIcon />}
             <Title title={title} />
             <Content content={content} />
             <StyledCategoriesContainer>

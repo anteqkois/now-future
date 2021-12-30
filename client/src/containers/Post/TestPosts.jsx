@@ -214,7 +214,7 @@ const TestPosts = () => {
     useEffect(() => {
         dispatch(getAllPosts());
     }, []);
-    console.log(postsStore);
+    // console.log(postsStore);
 
     return (
         <StyledPostContainer>

@@ -1,5 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useSelector } from 'react-redux';
+import MoreIcon from './../utils/MoreIcon';
 
 const StyledContentContainer = styled.div`
     grid-column: 2/3;
@@ -15,13 +17,21 @@ const StyledContent = styled.div`
 
 const StyledUsername = styled.p`
     ${({ theme }) => theme.typography.subtitle2}
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     font-weight: 700;
 `;
 
-const Content = ({ content, username }) => {
+const Content = ({ content, user }) => {
+    const userStore = useSelector((state) => state.user);
+
     return (
         <StyledContentContainer>
-            <StyledUsername>{username}</StyledUsername>
+            <StyledUsername>
+                {user.username}
+                {userStore.user._id === user._id && <MoreIcon />}
+            </StyledUsername>
             <StyledContent>{content}</StyledContent>
         </StyledContentContainer>
     );

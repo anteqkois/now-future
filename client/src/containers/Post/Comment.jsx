@@ -23,7 +23,7 @@ const Comment = ({ _id, user, content, stars, createdAt, updatedAt }) => {
     return (
         <StyledComment>
             <StyledAvatar />
-            <Content username={user.username} content={content} />
+            <Content user={user} content={content} />
             <Action
                 stars={stars}
                 createdAt={createdAt}

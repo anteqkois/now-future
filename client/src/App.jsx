@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
+
+import {login} from './feature/userSlice'
 import { ThemeProvider } from './providers/ThemeContext';
 import { ErrorProvider } from './providers/ErrorContext';
 
@@ -16,17 +18,22 @@ import Navbar from './containers/Navigation';
 import TestPosts from './containers/Post/TestPosts';
 import Sidebar from './containers/Sidebar';
 
-const PrivateRoute = ({ children }) => {
-    // const { user } = useSelector((state) => state.user);
-    // sessionStorage.getItem('isLogined') ? children : <Navigate to={{ pathname: '/login' }} />;
-    return children;
-};
 // const PrivateRoute = ({ children }) => {
-//   const { user } = useSelector((state) => state.user);
-//   return user ? children : <Navigate to={{ pathname: '/login' }} />;
+//     return children;
 // };
+const PrivateRoute = ({ children }) => {
+    const { user } = useSelector((state) => state.user);
+    return user ? children : <Navigate to={{ pathname: '/login' }} />;
+};
 
 function App() {
+    const dispatch = useDispatch();
+    const userStore = useSelector((state) => state.user);
+
+    useEffect(() => {
+        dispatch(login({ email: 'jannowak@gmail.com', password: 'haslo123' }));
+    }, []);
+
     return (
         <ThemeProvider>
             <BrowserRouter>
@@ -38,7 +45,14 @@ function App() {
                             <Route path="/register" element={<Register />} />
                             <Route path="/signup" element={<h1>Sigh Up</h1>} />
                             <Route path="/redux" element={<TestReduxUser />} />
-                            <Route path="/posts" element={<TestPosts />} />
+                            <Route
+                                path="/posts"
+                                element={
+                                    <PrivateRoute>
+                                        <TestPosts />
+                                    </PrivateRoute>
+                                }
+                            />
                             <Route
                                 path="/home"
                                 element={

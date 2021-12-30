@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 const StyledMoreIcon = styled.div`
-    width: 100%;
+    width: 40px;
     height: 40px;
     grid-column: 3/4;
     grid-row: 1/2;

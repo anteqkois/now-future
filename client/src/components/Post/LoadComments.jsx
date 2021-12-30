@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 const StyledLoadComments = styled.p`
     ${({ theme }) => theme.typography.caption};
-    padding-bottom: ${({ theme }) => theme.spacing.xs};
+    padding-bottom: ${({ theme }) => theme.spacing.s};
     font-weight: 600;
     text-align: center;
 `;

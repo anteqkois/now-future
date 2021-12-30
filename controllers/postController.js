@@ -12,7 +12,14 @@ const find = async (req, res, next) => {
         .populate('user', 'email username role')
         .populate('categories', 'name')
         .populate('stars', 'email username role')
-        .populate('comments');
+        .populate('comments')
+        .populate({
+            path: 'comments',
+            populate: {
+                path: 'user',
+                select: 'email username role',
+            },
+        });
 
     return res.status(200).send(data);
 };
@@ -27,7 +34,14 @@ const findAll = async (req, res, next) => {
         .populate('user', 'email username role')
         .populate('categories', 'name')
         .populate('stars', 'email username role')
-        .populate('comments');
+        .populate('comments')
+        .populate({
+            path: 'comments',
+            populate: {
+                path: 'user',
+                select: 'email username role',
+            },
+        });
 
     if (data.length === 0) {
         return res.status(404).send('Brak pasujących postów');
