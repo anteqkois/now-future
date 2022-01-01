@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import styled from 'styled-components';
 import CreateCommentModal from './CreateCommentModal';
+import Modal from './../../components/utils/Modal';
 
 const StyledAddComment = styled.div`
     p {
@@ -14,12 +15,18 @@ const StyledAddComment = styled.div`
 const AddComment = () => {
     const [createComment, setCreateComment] = useState(false);
 
+    const handleCreateComment = useCallback(() => {
+        setCreateComment((prev) => !prev);
+    }, []);
+
     return (
         <StyledAddComment>
             {createComment ? (
-                <CreateCommentModal />
+                <Modal closeModal={handleCreateComment}>
+                    <CreateCommentModal closeModal={handleCreateComment} />
+                </Modal>
             ) : (
-                <p onClick={() => setCreateComment((prev) => !prev)}>Dodaj komentarz...</p>
+                <p onClick={handleCreateComment}>Dodaj komentarz...</p>
             )}
         </StyledAddComment>
     );
