@@ -4,7 +4,7 @@ import CreateCommentModal from './CreateCommentModal';
 import Modal from './../../components/utils/Modal';
 
 const StyledAddComment = styled.div`
-    p {
+    > p {
         ${({ theme }) => theme.typography.caption};
         padding-bottom: ${({ theme }) => theme.spacing.s};
         font-weight: 600;
@@ -26,7 +26,7 @@ const AddComment = () => {
                     <CreateCommentModal closeModal={handleCreateComment} />
                 </Modal>
             ) : (
-                <p onClick={handleCreateComment}>Dodaj komentarz...</p>
+                <p onClick={handleCreateComment}>Dodaj komentarz</p>
             )}
         </StyledAddComment>
     );

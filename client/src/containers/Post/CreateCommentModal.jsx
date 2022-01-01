@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import Avatar from './../../components/utils/Avatar';
@@ -24,6 +24,10 @@ const StyledContentContainer = styled.div`
     grid-column: 2/3;
     grid-row: 1/3;
     padding: ${({ theme }) => theme.spacing.xs};
+    max-width: calc(
+        100vw - 2 * ${({ theme }) => theme.spacing.xs} - 2 * ${({ theme }) => theme.spacing.s} - 43px
+    );
+    height: auto;
     background-color: ${({ theme }) => theme.colors.lightGrey};
     border-radius: 5px;
 `;
@@ -36,18 +40,22 @@ const StyledUsername = styled.p`
     font-weight: 700;
 `;
 
-const StyledTextArea = styled.textarea`
+const StyledMyTextInput = styled.p`
     ${({ theme }) => theme.typography.body2}
-    resize: none;
     padding: ${({ theme }) => theme.spacing.xxs};
-    min-height: 3rem;
+    border: 1px solid #ccc;
     width: 100%;
-    border: none;
-    background-color: transparent;
+    overflow: hidden;
+    min-height: 2rem;
+
+    :empty::before {
+        content: 'Wpisz treść komentarza...';
+    }
 `;
 
 const CreateCommentModal = ({ closeModal }) => {
     const userStore = useSelector((state) => state.user);
+    const textArea = useRef(null);
 
     return (
         <StyledCreateCommentModal>
@@ -58,7 +66,11 @@ const CreateCommentModal = ({ closeModal }) => {
                         {userStore.user.username}
                         <DeleteCross onClick={closeModal} />
                     </StyledUsername>
-                    <StyledTextArea placeholder="Wpisz treść komentarza..."></StyledTextArea>
+                    <StyledMyTextInput
+                        ref={textArea}
+                        contentEditable={true}
+                        role="textbox"
+                    ></StyledMyTextInput>
                 </StyledContentContainer>
             </StyledComment>
         </StyledCreateCommentModal>

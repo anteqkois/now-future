@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 
 const StyledModalBackground = styled.div`
@@ -26,6 +26,13 @@ const StyledModal = styled.div`
 `;
 
 const Modal = ({ children, closeModal }) => {
+    useEffect(() => {
+        document.body.style.overflow = 'hidden';
+        return () => {
+            document.body.style.overflow = 'unset';
+        };
+    }, []);
+
     return (
         <>
             <StyledModalBackground onClick={closeModal} />
