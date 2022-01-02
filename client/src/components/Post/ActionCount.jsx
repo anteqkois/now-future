@@ -10,6 +10,10 @@ const StyledActionCounts = styled.div`
         ${({ theme }) => theme.typography.caption};
         padding-inline: ${({ theme }) => theme.spacing.xs};
         padding-block: ${({ theme }) => theme.spacing.xxs};
+
+        :nth-of-type(2) {
+            cursor: pointer;
+        }
     }
 `;
 

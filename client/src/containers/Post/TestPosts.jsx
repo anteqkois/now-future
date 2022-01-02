@@ -2,7 +2,7 @@ import React, { useEffect, Suspense } from 'react';
 import styled from 'styled-components';
 import PostContainer from './PostContainer';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllPosts } from './../../feature/postsSlice';
+import { fetchPosts, postsSelectors } from './../../feature/postsSlice';
 
 // const posts = [
 //     {
@@ -210,17 +210,19 @@ const StyledPostContainer = styled.article`
 
 const TestPosts = () => {
     const dispatch = useDispatch();
-    const postsStore = useSelector((state) => state.posts);
+    const posts = useSelector(postsSelectors.selectAll);
+    const postsError = useSelector((state) => state.posts.error);
 
     useEffect(() => {
-        dispatch(getAllPosts());
+        dispatch(fetchPosts());
     }, []);
-    // console.log(postsStore);
+
+    // console.log(postsError);
 
     return (
         <StyledPostContainer>
             <Suspense fallback={<h1>Ładowanie postów...</h1>}>
-                {postsStore.posts.map((post) => (
+                {posts.map((post) => (
                     <PostContainer key={post._id} {...post} />
                 ))}
             </Suspense>

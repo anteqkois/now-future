@@ -4,7 +4,7 @@ const lightColors = {
     primaryVariant: '#3700B3',
     secondary: '#03DAC6',
     secondaryVariant: '#018786',
-    background: '#efedf3',
+    background: '#e9e7ec',
     // background: '#FFFFFF',
     surface: '#FFFFFF',
     error: '#B00020',

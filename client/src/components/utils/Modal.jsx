@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
+import DeleteCross from './DeleteCross.jsx'
 
 const StyledModalBackground = styled.div`
     position: fixed;
@@ -17,6 +18,7 @@ const StyledModal = styled.div`
     left: 50%;
     width: calc(100% - 2 * ${({ theme }) => theme.spacing.xs});
     max-width: 750px;
+     padding-right: ${({ theme }) => theme.spacing.l};
     background-color: ${({ theme }) => theme.colors.background};
     color: ${({ theme }) => theme.colors.textOnBackground};
     box-shadow: 0px 35px 68px 0px rgba(131, 125, 131, 0.5), inset 0px -5px 16px 0px rgba(131, 125, 131, 0.6),
@@ -25,6 +27,13 @@ const StyledModal = styled.div`
     transform: translate(-50%, -50%);
     z-index: ${({ theme }) => theme.zIndex.level2};
 `;
+
+const StyledDeleteCross = styled(DeleteCross)`
+position: absolute;
+right: 0;
+top: 0;
+margin: ${({ theme }) => theme.spacing.xs};
+`
 
 const Modal = ({ children, closeModal }) => {
     useEffect(() => {
@@ -37,7 +46,7 @@ const Modal = ({ children, closeModal }) => {
     return (
         <>
             <StyledModalBackground onClick={closeModal} />
-            <StyledModal>{children}</StyledModal>
+            <StyledModal> <StyledDeleteCross onClick={closeModal} />{children}</StyledModal>
         </>
     );
 };

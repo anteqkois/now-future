@@ -6,7 +6,7 @@ import styled from 'styled-components';
 // import useError from '../providers/ErrorContext';
 import { useDispatch, useSelector } from 'react-redux';
 import { login, logout, signup } from '../feature/userSlice';
-import { getAllPosts } from '../feature/postsSlice';
+import { fetchPosts } from '../feature/postsSlice';
 import { useNavigate } from 'react-router-dom';
 
 const StyledTest = styled.div`
@@ -40,7 +40,7 @@ function TestReduxUser() {
     };
 
     const handleGetAllPsts = () => {
-        dispatch(getAllPosts());
+        dispatch(fetchPosts());
     };
 
     return (

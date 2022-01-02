@@ -9,6 +9,8 @@ const StyledMoreIcon = styled.div`
     display: flex;
     align-items: center;
     padding: ${({ theme }) => theme.spacing.xs};
+    cursor: pointer;
+    z-index: ${({ theme }) => theme.zIndex.level1};
 
     span {
         display: inline-block;
@@ -20,9 +22,10 @@ const StyledMoreIcon = styled.div`
     }
 `;
 
-const MoreIcon = () => {
+const MoreIcon = ({onClick}) => {
+
     return (
-        <StyledMoreIcon>
+        <StyledMoreIcon onClick={onClick}>
             <span></span>
             <span></span>
             <span></span>

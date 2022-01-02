@@ -1,5 +1,8 @@
-import React, { useRef } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useRef, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+
+import { putComment } from '../../feature/postsSlice';
+
 import styled from 'styled-components';
 import Avatar from './../../components/utils/Avatar';
 import DeleteCross from './../../components/utils/DeleteCross';
@@ -9,7 +12,7 @@ const StyledCreateCommentModal = styled.div``;
 const StyledComment = styled.div`
     display: grid;
     grid-template-columns: 40px auto;
-    grid-template-rows: 50px auto 50px;
+    grid-template-rows: 50px auto auto 50px;
     padding: ${({ theme }) => theme.spacing.s};
     gap: ${({ theme }) => theme.spacing.xxs};
     row-gap: ${({ theme }) => theme.spacing.s};
@@ -58,17 +61,45 @@ const StyledMyTextInput = styled.p`
 
 const StyledButtons = styled.div`
     grid-column: 1/3;
-    grid-row: 3/4;
+    grid-row: 4/5;
     display: flex;
     /* justify-content: center; */
     padding-left: calc(40px + ${({ theme }) => theme.spacing.xxs});
     justify-content: flex-start;
     gap: ${({ theme }) => theme.spacing.s};
 `;
+const StyledError = styled.p`
+    grid-column: 2/3;
+    grid-row: 3/4;
+    min-height: 1.5rem;
+    font-size: ${({ theme }) => theme.typography.caption};
+    color: ${({ theme }) => theme.colors.error};
+`;
 
-const CreateCommentModal = ({ closeModal }) => {
+const CreateCommentModal = ({ _id, closeModal }) => {
+    const [commentContent, setCommentContent] = useState('');
     const userStore = useSelector((state) => state.user);
+    const { error } = useSelector((state) => state.posts);
     const textArea = useRef(null);
+
+    const dispatch = useDispatch();
+
+    const handleTypingContent = () => {
+        setCommentContent(textArea.current.textContent);
+    };
+
+    const handleSubmit = async () => {
+        const data = await dispatch(
+            putComment({
+                id: _id,
+                body: {
+                    userId: userStore.user._id,
+                    content: commentContent,
+                },
+            }),
+        );
+        !data.error && closeModal();
+    };
 
     return (
         <StyledCreateCommentModal>
@@ -77,16 +108,18 @@ const CreateCommentModal = ({ closeModal }) => {
                 <StyledContentContainer>
                     <StyledUsername>
                         {userStore.user.username}
-                        <DeleteCross onClick={closeModal} />
+                        {/* <DeleteCross onClick={closeModal} /> */}
                     </StyledUsername>
                     <StyledMyTextInput
                         ref={textArea}
                         contentEditable={true}
                         role="textbox"
+                        onKeyUp={handleTypingContent}
                     ></StyledMyTextInput>
                 </StyledContentContainer>
+                <StyledError>{error ? `* ${error}` : ''}</StyledError>
                 <StyledButtons>
-                    <Button>Dodaj</Button>
+                    <Button onClick={handleSubmit}>Dodaj</Button>
                     <Button option="ghost">Anuluj</Button>
                 </StyledButtons>
             </StyledComment>

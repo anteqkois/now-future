@@ -4,15 +4,17 @@ import CreateCommentModal from './CreateCommentModal';
 import Modal from './../../components/utils/Modal';
 
 const StyledAddComment = styled.div`
+        text-align: center;
     > p {
         ${({ theme }) => theme.typography.caption};
+        display: inline-block;
         padding-bottom: ${({ theme }) => theme.spacing.s};
         font-weight: 600;
-        text-align: center;
+        cursor: pointer;
     }
 `;
 
-const AddComment = () => {
+const AddComment = ({ _id }) => {
     const [createComment, setCreateComment] = useState(false);
 
     const handleCreateComment = useCallback(() => {
@@ -23,7 +25,7 @@ const AddComment = () => {
         <StyledAddComment>
             {createComment ? (
                 <Modal closeModal={handleCreateComment}>
-                    <CreateCommentModal closeModal={handleCreateComment} />
+                    <CreateCommentModal closeModal={handleCreateComment} _id={_id} />
                 </Modal>
             ) : (
                 <p onClick={handleCreateComment}>Dodaj komentarz</p>

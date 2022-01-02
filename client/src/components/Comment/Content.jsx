@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useCallback } from 'react';
 import styled from 'styled-components';
 import { useSelector } from 'react-redux';
 import MoreIcon from './../utils/MoreIcon';
@@ -23,14 +23,14 @@ const StyledUsername = styled.p`
     font-weight: 700;
 `;
 
-const Content = ({ content, user }) => {
+const Content = ({ content, user, handleMoreCommentModal }) => {
     const userStore = useSelector((state) => state.user);
 
     return (
         <StyledContentContainer>
             <StyledUsername>
                 {user.username}
-                {userStore.user._id === user._id && <MoreIcon />}
+                {userStore.user._id === user._id && <MoreIcon onClick={handleMoreCommentModal} />}
             </StyledUsername>
             <StyledContent>{content}</StyledContent>
         </StyledContentContainer>
