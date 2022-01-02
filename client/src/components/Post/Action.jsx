@@ -37,6 +37,10 @@ const StyledAction = styled.div`
     ::after {
         bottom: 0;
     }
+
+    ${({ theme }) => theme.media.bigPhone} {
+        justify-content: space-around;
+    }
 `;
 
 const Action = () => {

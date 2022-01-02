@@ -204,6 +204,7 @@ const StyledPostContainer = styled.article`
     padding: ${({ theme }) => theme.spacing.xs};
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap: 20px;
 `;
 

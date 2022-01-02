@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import Avatar from './../../components/utils/Avatar';
 import DeleteCross from './../../components/utils/DeleteCross';
+import Button from './../../components/utils/Button';
 
 const StyledCreateCommentModal = styled.div``;
 const StyledComment = styled.div`
@@ -11,6 +12,7 @@ const StyledComment = styled.div`
     grid-template-rows: 50px auto 50px;
     padding: ${({ theme }) => theme.spacing.s};
     gap: ${({ theme }) => theme.spacing.xxs};
+    row-gap: ${({ theme }) => theme.spacing.s};
 `;
 
 const StyledAvatar = styled(Avatar)`
@@ -24,8 +26,9 @@ const StyledContentContainer = styled.div`
     grid-column: 2/3;
     grid-row: 1/3;
     padding: ${({ theme }) => theme.spacing.xs};
-    max-width: calc(
-        100vw - 2 * ${({ theme }) => theme.spacing.xs} - 2 * ${({ theme }) => theme.spacing.s} - 43px
+    max-width: min(
+        calc(100vw - 2 * ${({ theme }) => theme.spacing.xs} - 2 * ${({ theme }) => theme.spacing.s} - 43px),
+        673px
     );
     height: auto;
     background-color: ${({ theme }) => theme.colors.lightGrey};
@@ -53,6 +56,16 @@ const StyledMyTextInput = styled.p`
     }
 `;
 
+const StyledButtons = styled.div`
+    grid-column: 1/3;
+    grid-row: 3/4;
+    display: flex;
+    /* justify-content: center; */
+    padding-left: calc(40px + ${({ theme }) => theme.spacing.xxs});
+    justify-content: flex-start;
+    gap: ${({ theme }) => theme.spacing.s};
+`;
+
 const CreateCommentModal = ({ closeModal }) => {
     const userStore = useSelector((state) => state.user);
     const textArea = useRef(null);
@@ -72,6 +85,10 @@ const CreateCommentModal = ({ closeModal }) => {
                         role="textbox"
                     ></StyledMyTextInput>
                 </StyledContentContainer>
+                <StyledButtons>
+                    <Button>Dodaj</Button>
+                    <Button option="ghost">Anuluj</Button>
+                </StyledButtons>
             </StyledComment>
         </StyledCreateCommentModal>
     );

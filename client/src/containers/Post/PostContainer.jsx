@@ -8,6 +8,8 @@ import AddComment from './../../containers/Post/AddComment';
 const StyledPostContainer = styled.article`
     box-shadow: #cac8c8 1px 1px 10px;
     border-radius: 5px;
+    width: 100%;
+    max-width: 720px;
 `;
 
 const PostContainer = ({ _id, user, title, content, categories, stars, comments, createdAt, updatedAt }) => {
@@ -26,7 +28,7 @@ const PostContainer = ({ _id, user, title, content, categories, stars, comments,
                 amountOfComments={comments.length}
                 setShowComments={setShowComments}
             />
-                <AddComment user={user} />
+            <AddComment user={user} />
             <LoadComments
                 showComments={showComments}
                 setShowComments={setShowComments}

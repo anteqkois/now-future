@@ -16,6 +16,7 @@ const StyledModal = styled.div`
     top: 50%;
     left: 50%;
     width: calc(100% - 2 * ${({ theme }) => theme.spacing.xs});
+    max-width: 750px;
     background-color: ${({ theme }) => theme.colors.background};
     color: ${({ theme }) => theme.colors.textOnBackground};
     box-shadow: 0px 35px 68px 0px rgba(131, 125, 131, 0.5), inset 0px -5px 16px 0px rgba(131, 125, 131, 0.6),
