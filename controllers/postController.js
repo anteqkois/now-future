@@ -119,9 +119,8 @@ const addComment = async (req, res, next) => {
                     },
                 });
 
-            console.log(newPost);
             return res.status(201).send(newPost);
-        }, 100);
+        }, 10);
     } catch (error) {
         createApiError('Nie znaleziono postu w bazie danych', 404);
     }
@@ -141,22 +140,28 @@ const removeComment = async (req, res, next) => {
 const addStar = async (req, res, next) => {
     try {
         let post = await Post.findById(req.params.id);
-        post.stars.push(req.body.user);
+        post.stars.push(req.body.idUser);
         post.save();
 
-        post = await Post.findById(req.params.id)
-            .populate('user', 'email username role')
-            .populate('categories', 'name')
-            .populate('stars', 'email username role')
-            .populate('comments')
-            .populate({
-                path: 'comments',
-                populate: {
-                    path: 'user',
-                    select: 'email username role',
-                },
-            });
-        return res.status(201).send({ data: post });
+        setTimeout(async () => {
+            const newPost = await Post.find({
+                _id: req.params.id,
+            })
+                .select('_id user title content categories comments stars createdAt updatedAt')
+                .populate('user', 'email username role')
+                .populate('categories', 'name')
+                .populate('stars', 'email username role')
+                .populate('comments')
+                .populate({
+                    path: 'comments',
+                    populate: {
+                        path: 'user',
+                        select: 'email username role',
+                    },
+                });
+
+            return res.status(201).send(newPost);
+        }, 10);
     } catch (error) {
         createApiError('Nie znaleziono postu w bazie danych', 404);
     }

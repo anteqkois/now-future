@@ -90,10 +90,8 @@ const CreateCommentModal = ({ _id, closeModal }) => {
         const data = await dispatch(
             postComment({
                 id: _id,
-                body: {
-                    userId: userStore.user._id,
-                    content: commentContent,
-                },
+                userId: userStore.user._id,
+                content: commentContent,
             }),
         );
         !data.error && closeModal();

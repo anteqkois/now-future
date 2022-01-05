@@ -19,11 +19,16 @@ const StyledAvatar = styled(Avatar)`
     height: 40px;
 `;
 
-const Comment = ({ _id, user, content, stars, createdAt, updatedAt, handleMoreCommentModal }) => {
+const Comment = ({ _id, user, content, stars, createdAt, updatedAt, handleShowMoreModalWithCommentId }) => {
     return (
         <StyledComment>
             <StyledAvatar />
-            <Content user={user} content={content} handleMoreCommentModal={handleMoreCommentModal} _id={_id} />
+            <Content
+                user={user}
+                content={content}
+                handleShowMoreModalWithCommentId={handleShowMoreModalWithCommentId}
+                _id={_id}
+            />
             <Action stars={stars} createdAt={createdAt} updatedAt={updatedAt} />
         </StyledComment>
     );

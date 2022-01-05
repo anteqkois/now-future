@@ -45,6 +45,8 @@ const Post = ({
     amountOfStars,
     amountOfComments,
     setShowComments,
+    handleAddStarPost,
+    haveStar,
 }) => {
     const userStore = useSelector((state) => state.user);
 
@@ -66,7 +68,7 @@ const Post = ({
                     amountOfComments={amountOfComments}
                     setShowComments={setShowComments}
                 />
-                <Action />
+                <Action handleAddStarPost={handleAddStarPost} haveStar={haveStar} />
             </StyledActionContainer>
         </StyledPost>
     );

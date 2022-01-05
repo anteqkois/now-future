@@ -1,8 +1,8 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useMemo, useEffect } from 'react';
 import styled from 'styled-components';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { removeComment } from '../../feature/postsSlice';
+import { removeComment, postStar } from '../../feature/postsSlice';
 
 import Post from './Post';
 import LoadComments from './../../components/Post/LoadComments';
@@ -21,17 +21,25 @@ const StyledPostContainer = styled.article`
 const PostContainer = ({ _id, user, title, content, categories, stars, comments, createdAt, updatedAt }) => {
     const [showComments, setShowComments] = useState(false);
     const [moreComment, setMoreComment] = useState(false);
-    const [selectedCommentId, setSelectedCommentId] = useState(null);
 
     const dispatch = useDispatch();
+    const userStore = useSelector((state) => state.user);
 
-    const handleMoreCommentModal = useCallback((idComment) => {
-        setMoreComment((prev) => !prev);
-        typeof idComment === 'string' ? setSelectedCommentId(idComment) : setSelectedCommentId(null);
+    const haveStar = useMemo(() => {
+        return stars.findIndex((star) => star._id === userStore.user._id) === -1 ? false : true;
+    }, [stars, userStore]);
+
+    const handleShowMoreModalWithCommentId = useCallback((idComment) => {
+        setMoreComment(typeof idComment === 'string' ? idComment : false);
     }, []);
 
     const handleDeleteComment = () => {
-        dispatch(removeComment({ idPost: _id, idComment: selectedCommentId }));
+        dispatch(removeComment({ idPost: _id, idComment: moreComment }));
+    };
+
+    const handleAddStarPost = () => {
+        console.log({ idPost: _id, idUser: userStore.user._id });
+        dispatch(postStar({ idPost: _id, idUser: userStore.user._id }));
     };
 
     return (
@@ -46,6 +54,8 @@ const PostContainer = ({ _id, user, title, content, categories, stars, comments,
                 amountOfStars={stars.length}
                 amountOfComments={comments.length}
                 setShowComments={setShowComments}
+                handleAddStarPost={handleAddStarPost}
+                haveStar={haveStar}
             />
             <AddComment user={user} _id={_id} />
             <LoadComments
@@ -55,12 +65,15 @@ const PostContainer = ({ _id, user, title, content, categories, stars, comments,
             />
             {showComments &&
                 comments.map((comment) => (
-                    <Comment {...comment} handleMoreCommentModal={handleMoreCommentModal} />
+                    <Comment
+                        {...comment}
+                        handleShowMoreModalWithCommentId={handleShowMoreModalWithCommentId}
+                    />
                 ))}
             {moreComment && (
-                <Modal closeModal={handleMoreCommentModal}>
+                <Modal closeModal={handleShowMoreModalWithCommentId}>
                     <MoreModal
-                        closeModal={handleMoreCommentModal}
+                        closeModal={handleShowMoreModalWithCommentId}
                         handleDeleteComment={handleDeleteComment}
                     />
                 </Modal>

@@ -25,7 +25,7 @@ const StyledUsername = styled.p`
     font-weight: 700;
 `;
 
-const Content = ({ _id, content, user, handleMoreCommentModal }) => {
+const Content = ({ _id, content, user, handleShowMoreModalWithCommentId }) => {
     const userStore = useSelector((state) => state.user);
 
     return (
@@ -35,7 +35,7 @@ const Content = ({ _id, content, user, handleMoreCommentModal }) => {
                 {userStore.user._id === user._id && (
                     <MoreIcon
                         onClick={() => {
-                            handleMoreCommentModal(_id);
+                            handleShowMoreModalWithCommentId(_id);
                         }}
                     />
                 )}

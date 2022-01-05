@@ -10,36 +10,38 @@ export const fetchPosts = createAsyncThunk('posts/', async (thunkAPI) => {
     }
 });
 
-export const postComment = createAsyncThunk('postsAddComments/', async ({ id, body }, thunkAPI) => {
-    try {
-        const response = await posts.addComment(id, body);
-        return response.data;
-    } catch (error) {
-        return thunkAPI.rejectWithValue(error.response.data);
-    }
-});
-
-export const removeComment = createAsyncThunk(
-    'postsRemoveComments/',
-    async ({ idPost, idComment }, thunkAPI) => {
+export const postComment = createAsyncThunk(
+    'postsAddComments/',
+    async ({ id, userId, content }, thunkAPI) => {
         try {
-            // const response = await posts.removeComment(idPost, idComment);
-            // return { data: response.data, idPost, idComment };
-            return { idPost, idComment };
+            const response = await posts.addComment(id, { userId, content });
+            return response.data;
         } catch (error) {
             return thunkAPI.rejectWithValue(error.response.data);
         }
     },
 );
 
-// export const postStar = createAsyncThunk('postsAddStar/', async ({ id, body }, thunkAPI) => {
-//     try {
-//         const response = await posts.addComment(id, body);
-//         return response.data;
-//     } catch (error) {
-//         return thunkAPI.rejectWithValue(error.response.data);
-//     }
-// });
+export const removeComment = createAsyncThunk(
+    'postsRemoveComments/',
+    async ({ idPost, idComment }, thunkAPI) => {
+        try {
+            const response = await posts.removeComment(idPost, idComment);
+            return { data: response.data, idPost, idComment };
+        } catch (error) {
+            return thunkAPI.rejectWithValue(error.response.data);
+        }
+    },
+);
+
+export const postStar = createAsyncThunk('postsAddStars/', async ({ idPost, idUser }, thunkAPI) => {
+    try {
+        const response = await posts.addStar(idPost, { idUser });
+        return response.data;
+    } catch (error) {
+        return thunkAPI.rejectWithValue(error.response.data);
+    }
+});
 
 // export const getPost = createAsyncThunk('posts/:id', async ({ id }, thunkAPI) => {
 //     try {
@@ -83,14 +85,12 @@ const postsSlice = createSlice({
             state.error = null;
         });
         builder.addCase(postComment.rejected, (state, action) => {
-            state.error = action.payload.error.content;
+            state.error = action.payload.error.content
+                ? action.payload.error.content
+                : 'Coś poszło nie tak, nie udało się dodać komentarza';
         });
         builder.addCase(removeComment.fulfilled, (state, action) => {
-            console.log(action.payload);
-
             const post = postsAdapter.getSelectors().selectById(state.posts, action.payload.idPost);
-
-            console.log(post.comments.filter((comment) => comment._id !== action.payload.idComment));
 
             postsAdapter.updateOne(state.posts, {
                 id: action.payload.idPost,
@@ -99,12 +99,22 @@ const postsSlice = createSlice({
                     comments: post.comments.filter((comment) => comment._id !== action.payload.idComment),
                 },
             });
-
-            // postsAdapter.removeOne(state.posts, action.payload);
             state.error = null;
         });
         builder.addCase(removeComment.rejected, (state, action) => {
-            state.error = action.payload.error.content;
+            state.error = action.payload ? action.payloa : 'Nie udało się usunąć komentarza';
+        });
+        builder.addCase(postStar.fulfilled, (state, action) => {
+            postsAdapter.updateOne(state.posts, {
+                id: action.payload[0]._id,
+                changes: action.payload[0],
+            });
+            state.error = null;
+        });
+        builder.addCase(postStar.rejected, (state, action) => {
+            state.error = action.payload.error.content
+                ? action.payload.error.content
+                : 'Coś poszło nie tak, nie udało się dodać gwiazdki';
         });
         // builder.addCase(getPost.fulfilled, (state, action) => {
         //     // console.log(action.payload);

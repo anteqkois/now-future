@@ -16,7 +16,14 @@ const MoreModal = ({ closeModal, handleDeleteComment }) => {
     return (
         <StyledMoreOption>
             <StyledMoreOptionItem>Edytuj</StyledMoreOptionItem>
-            <StyledMoreOptionItem onClick={handleDeleteComment}>Usuń</StyledMoreOptionItem>
+            <StyledMoreOptionItem
+                onClick={() => {
+                    handleDeleteComment();
+                    closeModal();
+                }}
+            >
+                Usuń
+            </StyledMoreOptionItem>
         </StyledMoreOption>
     );
 };
