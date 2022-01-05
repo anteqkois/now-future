@@ -10,7 +10,7 @@ export const fetchPosts = createAsyncThunk('posts/', async (thunkAPI) => {
     }
 });
 
-export const putComment = createAsyncThunk('postsAddComments/', async ({ id, body }, thunkAPI) => {
+export const postComment = createAsyncThunk('postsAddComments/', async ({ id, body }, thunkAPI) => {
     try {
         const response = await posts.addComment(id, body);
         return response.data;
@@ -18,6 +18,28 @@ export const putComment = createAsyncThunk('postsAddComments/', async ({ id, bod
         return thunkAPI.rejectWithValue(error.response.data);
     }
 });
+
+export const removeComment = createAsyncThunk(
+    'postsRemoveComments/',
+    async ({ idPost, idComment }, thunkAPI) => {
+        try {
+            // const response = await posts.removeComment(idPost, idComment);
+            // return { data: response.data, idPost, idComment };
+            return { idPost, idComment };
+        } catch (error) {
+            return thunkAPI.rejectWithValue(error.response.data);
+        }
+    },
+);
+
+// export const postStar = createAsyncThunk('postsAddStar/', async ({ id, body }, thunkAPI) => {
+//     try {
+//         const response = await posts.addComment(id, body);
+//         return response.data;
+//     } catch (error) {
+//         return thunkAPI.rejectWithValue(error.response.data);
+//     }
+// });
 
 // export const getPost = createAsyncThunk('posts/:id', async ({ id }, thunkAPI) => {
 //     try {
@@ -38,11 +60,14 @@ const postsSlice = createSlice({
         posts: postsAdapter.getInitialState([]),
         error: null,
     },
-    // reducers: {
-    //     search: (state) => {
-    //         // state.user = null;
-    //     },
-    // },
+    reducers: {
+        // search: (state) => {
+        //     // state.user = null;
+        // },
+        resetError: (state) => {
+            state.error = null;
+        },
+    },
     extraReducers: (builder) => {
         builder.addCase(fetchPosts.fulfilled, (state, action) => {
             postsAdapter.setAll(state.posts, action.payload);
@@ -50,15 +75,35 @@ const postsSlice = createSlice({
         builder.addCase(fetchPosts.rejected, (state, action) => {
             state.error = action.payload.error;
         });
-        builder.addCase(putComment.fulfilled, (state, action) => {
+        builder.addCase(postComment.fulfilled, (state, action) => {
             postsAdapter.updateOne(state.posts, {
                 id: action.payload[0]._id,
                 changes: action.payload[0],
             });
             state.error = null;
         });
-        builder.addCase(putComment.rejected, (state, action) => {
-            console.log(action.payload.error);
+        builder.addCase(postComment.rejected, (state, action) => {
+            state.error = action.payload.error.content;
+        });
+        builder.addCase(removeComment.fulfilled, (state, action) => {
+            console.log(action.payload);
+
+            const post = postsAdapter.getSelectors().selectById(state.posts, action.payload.idPost);
+
+            console.log(post.comments.filter((comment) => comment._id !== action.payload.idComment));
+
+            postsAdapter.updateOne(state.posts, {
+                id: action.payload.idPost,
+                changes: {
+                    ...post,
+                    comments: post.comments.filter((comment) => comment._id !== action.payload.idComment),
+                },
+            });
+
+            // postsAdapter.removeOne(state.posts, action.payload);
+            state.error = null;
+        });
+        builder.addCase(removeComment.rejected, (state, action) => {
             state.error = action.payload.error.content;
         });
         // builder.addCase(getPost.fulfilled, (state, action) => {
@@ -70,6 +115,8 @@ const postsSlice = createSlice({
         // });
     },
 });
+
+export const { resetError } = postsSlice.actions;
 
 export const postsSelectors = postsAdapter.getSelectors((state) => state.posts.posts);
 

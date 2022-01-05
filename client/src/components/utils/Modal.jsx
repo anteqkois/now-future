@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
-import DeleteCross from './DeleteCross.jsx'
+import DeleteCross from './DeleteCross.jsx';
 
 const StyledModalBackground = styled.div`
     position: fixed;
@@ -17,8 +17,10 @@ const StyledModal = styled.div`
     top: 50%;
     left: 50%;
     width: calc(100% - 2 * ${({ theme }) => theme.spacing.xs});
+    min-width: 300px;
     max-width: 750px;
-     padding-right: ${({ theme }) => theme.spacing.l};
+    min-height: 100px;
+    padding-block: ${({ theme }) => theme.spacing.xl1};
     background-color: ${({ theme }) => theme.colors.background};
     color: ${({ theme }) => theme.colors.textOnBackground};
     box-shadow: 0px 35px 68px 0px rgba(131, 125, 131, 0.5), inset 0px -5px 16px 0px rgba(131, 125, 131, 0.6),
@@ -29,11 +31,11 @@ const StyledModal = styled.div`
 `;
 
 const StyledDeleteCross = styled(DeleteCross)`
-position: absolute;
-right: 0;
-top: 0;
-margin: ${({ theme }) => theme.spacing.xs};
-`
+    position: absolute;
+    right: 0;
+    top: 0;
+    margin: ${({ theme }) => theme.spacing.xs};
+`;
 
 const Modal = ({ children, closeModal }) => {
     useEffect(() => {
@@ -46,7 +48,10 @@ const Modal = ({ children, closeModal }) => {
     return (
         <>
             <StyledModalBackground onClick={closeModal} />
-            <StyledModal> <StyledDeleteCross onClick={closeModal} />{children}</StyledModal>
+            <StyledModal>
+                <StyledDeleteCross onClick={closeModal} />
+                {children}
+            </StyledModal>
         </>
     );
 };

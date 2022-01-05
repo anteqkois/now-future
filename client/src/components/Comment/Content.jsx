@@ -6,12 +6,14 @@ import MoreIcon from './../utils/MoreIcon';
 const StyledContentContainer = styled.div`
     grid-column: 2/3;
     grid-row: 1/3;
+    max-width: 100vw;
     padding: ${({ theme }) => theme.spacing.xs};
     background-color: ${({ theme }) => theme.colors.lightGrey};
     border-radius: 5px;
+    overflow-x: hidden;
 `;
 
-const StyledContent = styled.div`
+const StyledContent = styled.p`
     ${({ theme }) => theme.typography.body2}
 `;
 
@@ -23,14 +25,20 @@ const StyledUsername = styled.p`
     font-weight: 700;
 `;
 
-const Content = ({ content, user, handleMoreCommentModal }) => {
+const Content = ({ _id, content, user, handleMoreCommentModal }) => {
     const userStore = useSelector((state) => state.user);
 
     return (
         <StyledContentContainer>
             <StyledUsername>
                 {user.username}
-                {userStore.user._id === user._id && <MoreIcon onClick={handleMoreCommentModal} />}
+                {userStore.user._id === user._id && (
+                    <MoreIcon
+                        onClick={() => {
+                            handleMoreCommentModal(_id);
+                        }}
+                    />
+                )}
             </StyledUsername>
             <StyledContent>{content}</StyledContent>
         </StyledContentContainer>

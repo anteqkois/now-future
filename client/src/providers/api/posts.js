@@ -15,9 +15,9 @@ export const addComment = (id, body) => api.post(`/posts/${id}/comments`, body);
 export const addCategory = (id, body) => api.post(`/posts/${id}/categories`, body);
 export const addStar = (id, body) => api.post(`/posts/${id}/stars`, body);
 
-export const removeComment = (id, body) => api.delete(`/posts/${id}/comments`, body);
-export const removeCategory = (id, body) => api.delete(`/posts/${id}/categories`, body);
-export const removeStar = (id, body) => api.delete(`/posts/${id}/stars`, body);
+export const removeComment = (idPost, idComment) => api.delete(`/posts/${idPost}/comments/${idComment}`);
+export const removeCategory = (idPost, idCategory) => api.delete(`/posts/${idPost}/categories/${idCategory}`);
+export const removeStar = (idPost, idUser) => api.delete(`/posts/${idPost}/stars/${idUser}`);
 
 export default {
     get,

@@ -1,11 +1,10 @@
 import React, { useRef, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { putComment } from '../../feature/postsSlice';
+import { postComment } from '../../feature/postsSlice';
 
 import styled from 'styled-components';
 import Avatar from './../../components/utils/Avatar';
-import DeleteCross from './../../components/utils/DeleteCross';
 import Button from './../../components/utils/Button';
 
 const StyledCreateCommentModal = styled.div``;
@@ -13,9 +12,9 @@ const StyledComment = styled.div`
     display: grid;
     grid-template-columns: 40px auto;
     grid-template-rows: 50px auto auto 50px;
-    padding: ${({ theme }) => theme.spacing.s};
+    padding-inline: ${({ theme }) => theme.spacing.s};
     gap: ${({ theme }) => theme.spacing.xxs};
-    row-gap: ${({ theme }) => theme.spacing.s};
+    row-gap: ${({ theme }) => theme.spacing.xs};
 `;
 
 const StyledAvatar = styled(Avatar)`
@@ -63,7 +62,6 @@ const StyledButtons = styled.div`
     grid-column: 1/3;
     grid-row: 4/5;
     display: flex;
-    /* justify-content: center; */
     padding-left: calc(40px + ${({ theme }) => theme.spacing.xxs});
     justify-content: flex-start;
     gap: ${({ theme }) => theme.spacing.s};
@@ -71,7 +69,7 @@ const StyledButtons = styled.div`
 const StyledError = styled.p`
     grid-column: 2/3;
     grid-row: 3/4;
-    min-height: 1.5rem;
+    /* min-height: 1.5rem; */
     font-size: ${({ theme }) => theme.typography.caption};
     color: ${({ theme }) => theme.colors.error};
 `;
@@ -90,7 +88,7 @@ const CreateCommentModal = ({ _id, closeModal }) => {
 
     const handleSubmit = async () => {
         const data = await dispatch(
-            putComment({
+            postComment({
                 id: _id,
                 body: {
                     userId: userStore.user._id,
@@ -120,7 +118,9 @@ const CreateCommentModal = ({ _id, closeModal }) => {
                 <StyledError>{error ? `* ${error}` : ''}</StyledError>
                 <StyledButtons>
                     <Button onClick={handleSubmit}>Dodaj</Button>
-                    <Button option="ghost">Anuluj</Button>
+                    <Button option="ghost" onClick={closeModal}>
+                        Anuluj
+                    </Button>
                 </StyledButtons>
             </StyledComment>
         </StyledCreateCommentModal>

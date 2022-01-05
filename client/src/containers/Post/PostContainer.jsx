@@ -1,5 +1,9 @@
 import React, { useState, useCallback } from 'react';
 import styled from 'styled-components';
+import { useDispatch } from 'react-redux';
+
+import { removeComment } from '../../feature/postsSlice';
+
 import Post from './Post';
 import LoadComments from './../../components/Post/LoadComments';
 import Comment from './Comment';
@@ -17,10 +21,18 @@ const StyledPostContainer = styled.article`
 const PostContainer = ({ _id, user, title, content, categories, stars, comments, createdAt, updatedAt }) => {
     const [showComments, setShowComments] = useState(false);
     const [moreComment, setMoreComment] = useState(false);
+    const [selectedCommentId, setSelectedCommentId] = useState(null);
 
-    const handleMoreCommentModal = useCallback(() => {
+    const dispatch = useDispatch();
+
+    const handleMoreCommentModal = useCallback((idComment) => {
         setMoreComment((prev) => !prev);
+        typeof idComment === 'string' ? setSelectedCommentId(idComment) : setSelectedCommentId(null);
     }, []);
+
+    const handleDeleteComment = () => {
+        dispatch(removeComment({ idPost: _id, idComment: selectedCommentId }));
+    };
 
     return (
         <StyledPostContainer>
@@ -47,7 +59,10 @@ const PostContainer = ({ _id, user, title, content, categories, stars, comments,
                 ))}
             {moreComment && (
                 <Modal closeModal={handleMoreCommentModal}>
-                    <MoreModal closeModal={handleMoreCommentModal} _id={_id} >More</MoreModal>
+                    <MoreModal
+                        closeModal={handleMoreCommentModal}
+                        handleDeleteComment={handleDeleteComment}
+                    />
                 </Modal>
             )}
         </StyledPostContainer>
