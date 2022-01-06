@@ -58,7 +58,7 @@ const update = async (req, res, next) => {
                 runValidators: true,
             },
         );
-        return res.status(201).send({ data: comment });
+        return res.status(201).send(comment);
     } catch (error) {
         error = handleValidationErrors(error);
         return res.status(400).json({ error });

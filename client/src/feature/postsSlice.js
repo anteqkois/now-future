@@ -1,4 +1,5 @@
 import posts from '../providers/api/posts.js';
+import comments from '../providers/api/comments.js';
 import { createAsyncThunk, createEntityAdapter, createSlice } from '@reduxjs/toolkit';
 
 export const fetchPosts = createAsyncThunk('posts/', async (thunkAPI) => {
@@ -22,6 +23,18 @@ export const postComment = createAsyncThunk(
     },
 );
 
+export const updateComment = createAsyncThunk(
+    'updateAddComments/',
+    async ({ idComment, content }, thunkAPI) => {
+        try {
+            const response = await comments.update(idComment, { content });
+            return response.data;
+        } catch (error) {
+            return thunkAPI.rejectWithValue(error.response.data);
+        }
+    },
+);
+
 export const removeComment = createAsyncThunk(
     'postsRemoveComments/',
     async ({ idPost, idComment }, thunkAPI) => {
@@ -38,6 +51,15 @@ export const postStar = createAsyncThunk('postsAddStars/', async ({ idPost, idUs
     try {
         const response = await posts.addStar(idPost, { idUser });
         return response.data;
+    } catch (error) {
+        return thunkAPI.rejectWithValue(error.response.data);
+    }
+});
+
+export const removeStar = createAsyncThunk('postsRemoveStars/', async ({ idPost, idUser }, thunkAPI) => {
+    try {
+        const response = await posts.removeStar(idPost, idUser);
+        return { data: response.data, idPost, idUser };
     } catch (error) {
         return thunkAPI.rejectWithValue(error.response.data);
     }
@@ -89,6 +111,18 @@ const postsSlice = createSlice({
                 ? action.payload.error.content
                 : 'Coś poszło nie tak, nie udało się dodać komentarza';
         });
+        builder.addCase(updateComment.fulfilled, (state, action) => {
+            postsAdapter.updateOne(state.posts, {
+                id: action.payload._id,
+                changes: action.payload,
+            });
+            state.error = null;
+        });
+        builder.addCase(updateComment.rejected, (state, action) => {
+            state.error = action.payload.error.content
+                ? action.payload.error.content
+                : 'Coś poszło nie tak, nie udało się zaktualizować komentarza';
+        });
         builder.addCase(removeComment.fulfilled, (state, action) => {
             const post = postsAdapter.getSelectors().selectById(state.posts, action.payload.idPost);
 
@@ -106,8 +140,8 @@ const postsSlice = createSlice({
         });
         builder.addCase(postStar.fulfilled, (state, action) => {
             postsAdapter.updateOne(state.posts, {
-                id: action.payload[0]._id,
-                changes: action.payload[0],
+                id: action.payload._id,
+                changes: action.payload,
             });
             state.error = null;
         });
@@ -115,6 +149,21 @@ const postsSlice = createSlice({
             state.error = action.payload.error.content
                 ? action.payload.error.content
                 : 'Coś poszło nie tak, nie udało się dodać gwiazdki';
+        });
+        builder.addCase(removeStar.fulfilled, (state, action) => {
+            const post = postsAdapter.getSelectors().selectById(state.posts, action.payload.idPost);
+
+            postsAdapter.updateOne(state.posts, {
+                id: action.payload.idPost,
+                changes: {
+                    ...post,
+                    stars: post.stars.filter((star) => star._id !== action.payload.idUser),
+                },
+            });
+            state.error = null;
+        });
+        builder.addCase(removeStar.rejected, (state, action) => {
+            state.error = action.payload ? action.payloa : 'Nie udało się usunąć komentarza';
         });
         // builder.addCase(getPost.fulfilled, (state, action) => {
         //     // console.log(action.payload);

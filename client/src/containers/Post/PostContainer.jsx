@@ -1,15 +1,16 @@
-import React, { useState, useCallback, useMemo, useEffect } from 'react';
+import React, { useState, useCallback, useMemo } from 'react';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { removeComment, postStar } from '../../feature/postsSlice';
+import { removeComment, postStar, removeStar, resetError } from '../../feature/postsSlice';
 
 import Post from './Post';
 import LoadComments from './../../components/Post/LoadComments';
 import Comment from './Comment';
-import AddComment from './../../containers/Post/AddComment';
+// import AddComment from './../../containers/Post/AddComment';
 import MoreModal from './../../containers/Post/MoreModal';
 import Modal from '../../components/utils/Modal';
+import CreateCommentModal from './CreateCommentModal';
 
 const StyledPostContainer = styled.article`
     box-shadow: #cac8c8 1px 1px 10px;
@@ -18,9 +19,19 @@ const StyledPostContainer = styled.article`
     max-width: 720px;
 `;
 
+const StyledAddComment = styled.p`
+    ${({ theme }) => theme.typography.caption};
+    display: flex;
+    justify-content: center;
+    padding-bottom: ${({ theme }) => theme.spacing.s};
+    font-weight: 600;
+    cursor: pointer;
+`;
+
 const PostContainer = ({ _id, user, title, content, categories, stars, comments, createdAt, updatedAt }) => {
     const [showComments, setShowComments] = useState(false);
     const [moreComment, setMoreComment] = useState(false);
+    const [createComment, setCreateComment] = useState(false);
 
     const dispatch = useDispatch();
     const userStore = useSelector((state) => state.user);
@@ -33,13 +44,19 @@ const PostContainer = ({ _id, user, title, content, categories, stars, comments,
         setMoreComment(typeof idComment === 'string' ? idComment : false);
     }, []);
 
+    const handleCreateComment = useCallback(() => {
+        setCreateComment((prev) => !prev);
+        dispatch(resetError());
+    }, []);
+
     const handleDeleteComment = () => {
         dispatch(removeComment({ idPost: _id, idComment: moreComment }));
     };
 
     const handleAddStarPost = () => {
-        console.log({ idPost: _id, idUser: userStore.user._id });
-        dispatch(postStar({ idPost: _id, idUser: userStore.user._id }));
+        haveStar
+            ? dispatch(removeStar({ idPost: _id, idUser: userStore.user._id }))
+            : dispatch(postStar({ idPost: _id, idUser: userStore.user._id }));
     };
 
     return (
@@ -57,7 +74,7 @@ const PostContainer = ({ _id, user, title, content, categories, stars, comments,
                 handleAddStarPost={handleAddStarPost}
                 haveStar={haveStar}
             />
-            <AddComment user={user} _id={_id} />
+            <StyledAddComment onClick={handleCreateComment}>Dodaj komentarz</StyledAddComment>
             <LoadComments
                 showComments={showComments}
                 setShowComments={setShowComments}
@@ -70,6 +87,11 @@ const PostContainer = ({ _id, user, title, content, categories, stars, comments,
                         handleShowMoreModalWithCommentId={handleShowMoreModalWithCommentId}
                     />
                 ))}
+            {createComment && (
+                <Modal closeModal={handleCreateComment}>
+                    <CreateCommentModal closeModal={handleCreateComment} _id={_id} />
+                </Modal>
+            )}
             {moreComment && (
                 <Modal closeModal={handleShowMoreModalWithCommentId}>
                     <MoreModal

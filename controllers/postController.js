@@ -139,29 +139,23 @@ const removeComment = async (req, res, next) => {
 
 const addStar = async (req, res, next) => {
     try {
-        let post = await Post.findById(req.params.id);
+        let post = await Post.findById(req.params.id)
+            .select('_id user title content categories comments stars createdAt updatedAt')
+            .populate('user', 'email username role')
+            .populate('categories', 'name')
+            .populate('stars', 'email username role')
+            .populate('comments')
+            .populate({
+                path: 'comments',
+                populate: {
+                    path: 'user',
+                    select: 'email username role',
+                },
+            });
+
         post.stars.push(req.body.idUser);
         post.save();
-
-        setTimeout(async () => {
-            const newPost = await Post.find({
-                _id: req.params.id,
-            })
-                .select('_id user title content categories comments stars createdAt updatedAt')
-                .populate('user', 'email username role')
-                .populate('categories', 'name')
-                .populate('stars', 'email username role')
-                .populate('comments')
-                .populate({
-                    path: 'comments',
-                    populate: {
-                        path: 'user',
-                        select: 'email username role',
-                    },
-                });
-
-            return res.status(201).send(newPost);
-        }, 10);
+        return res.status(201).send(post);
     } catch (error) {
         createApiError('Nie znaleziono postu w bazie danych', 404);
     }
