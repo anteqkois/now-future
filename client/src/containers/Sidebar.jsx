@@ -23,7 +23,7 @@ const StyledSidebar = styled.div`
 `
 const StyledNavItem = styled.a`
     color: ${({ theme }) => theme.colors.textOnBackground};
-    /* box-shadow: 0 0 5px #eee; */
+    /* box-shadow: #cac8c8 0px 3px 0px; */
     display: flex;
     flex-direction: row;
     opacity: 0.9;
@@ -50,11 +50,16 @@ const StyledNavItemText = styled.p`
     padding-left: 20px;
 `
 
+const StyledLogoLogoutContainer = styled.div`
+    position: absolute;
+    bottom: 10vh;
+    left: 0;
+`
+
 const LogoContainer = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 90px 0;
 `
 
 const StyledLogoutItem = styled.a`
@@ -64,9 +69,10 @@ const StyledLogoutItem = styled.a`
     /* background-size: 200% auto; */
     background: ${({ theme }) => theme.colors.lightGrey};
     color: ${({ theme }) => theme.colors.textOnBackground};
-    box-shadow: 2px 5px 5px ${({ theme }) => theme.colors.primaryVariant};
+    box-shadow: 2px 4px 4px ${({ theme }) => theme.colors.primaryVariant};
     transition: 0.3s ease;
     padding: 15px 15px;
+    margin-top: 5vh;
     border-radius: 0 10px 10px 0;
 
     &:hover {
@@ -102,14 +108,16 @@ function Sidebar() {
                     <StyledNavItemText>Statystyki</StyledNavItemText>
                 </StyledNavItem>
 
-                <LogoContainer>
-                    <Logo />
-                </LogoContainer>
+                <StyledLogoLogoutContainer>
+                    <LogoContainer>
+                        <Logo />
+                    </LogoContainer>
 
-                <StyledLogoutItem>
-                    <Logout />
-                    <StyledNavItemText>Wyloguj się</StyledNavItemText>
-                </StyledLogoutItem>
+                    <StyledLogoutItem>
+                        <Logout />
+                        <StyledNavItemText>Wyloguj się</StyledNavItemText>
+                    </StyledLogoutItem>
+                </StyledLogoLogoutContainer>        
             </StyledSidebar>
         </>
     )

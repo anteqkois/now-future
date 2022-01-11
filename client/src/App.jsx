@@ -15,7 +15,9 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Navbar from './containers/Navigation';
 import TestPosts from './containers/Post/TestPosts';
-import Sidebar from './containers/Sidebar';
+// import Sidebar from './containers/Sidebar';
+import Add from './containers/Add/Add';
+
 
 // const PrivateRoute = ({ children }) => {
 //     return children;
@@ -58,6 +60,7 @@ function App() {
                                     <PrivateRoute>
                                         <Navbar />
                                         {/* <Sidebar /> */}
+                                        <Add />
                                     </PrivateRoute>
                                 }
                             />

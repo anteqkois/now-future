@@ -27,7 +27,7 @@ const StyledAvatar = styled(Avatar)`
 const StyledContentContainer = styled.div`
     grid-column: 2/3;
     grid-row: 1/3;
-    padding: ${({ theme }) => theme.spacing.xs};
+    padding: ${({ theme }) => theme.spacing.s} ${({ theme }) => theme.spacing.s};
     max-width: min(
         calc(100vw - 2 * ${({ theme }) => theme.spacing.xs} - 2 * ${({ theme }) => theme.spacing.s} - 43px),
         673px
@@ -47,7 +47,8 @@ const StyledUsername = styled.p`
 
 const StyledMyTextInput = styled.p`
     ${({ theme }) => theme.typography.body2}
-    padding: ${({ theme }) => theme.spacing.xxs};
+    padding: ${({ theme }) => theme.spacing.xs};
+    margin-top: 12px;
     border: 1px solid #ccc;
     width: 100%;
     overflow: hidden;

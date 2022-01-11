@@ -140,7 +140,7 @@ const ButtonContainer = styled.div`
 
 function Navigation() {
   const [filters, setFilters] = useState(false);
-  const [sidebar, setSidebar] = useState(false);
+  const [sidebar, setSidebar] = useState(true);
 
   return (
     <>
